@@ -1,0 +1,9 @@
+.c-login-form {
+  max-width: 680px;
+  margin: auto;
+}
+
+.c-login-form-actions {
+  padding-top: var(--spacing-01);
+  justify-content: flex-end;
+}

@@ -1,0 +1,8 @@
+.wrapper {
+  width: 100%;
+  width: clamp(16rem, 100%, 85rem);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem;
+  position: relative;
+}

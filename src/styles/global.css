@@ -1,0 +1,121 @@
+@import url("./reset.css");
+@import url("./font.css");
+@import url("./tokens.css");
+@import url("./utils.css");
+@import url("./layout.css");
+@import url("./form.css");
+
+@import url("./page.css");
+
+body {
+  padding: 0;
+  margin: 0;
+  color: var(--color-fg);
+  background: var(--color-bg);
+  scroll-behavior: smooth;
+  font-family: var(--font-serif);
+
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  display: flex;
+  flex-flow: column;
+}
+
+h1,
+h2,
+h3,
+h4 {
+}
+
+h1,
+h2 {
+  font-weight: 900;
+}
+
+h2,
+h3 {
+  max-width: 30ch;
+}
+
+h1 {
+  max-width: 15ch;
+}
+
+h2,
+h3 {
+}
+
+a {
+  color: currentColor;
+  transition: all 0.2s ease;
+}
+
+figcaption {
+  font-size: var(--size-300);
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+blockquote {
+  max-width: max-content;
+  padding-left: var(--size-600);
+  border-left: 5px solid;
+  font-style: italic;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+::selection {
+  color: var(--color-bg);
+  background: var(--color-hl);
+}
+
+li,
+p {
+  max-width: 60ch;
+  max-width: 640px;
+}
+
+code,
+pre {
+  font-family: Space Mono, monospace;
+}
+
+code:not([class]) {
+  font-size: 0.9em;
+  padding: 0 var(--margin-01);
+  color: var(--yellow);
+  border-radius: var(--margin-01);
+  background: var(--gray);
+}
+
+ol:not([class]),
+ul:not([class]) {
+  padding: 0;
+  list-style: none;
+}
+
+ol:not([class]) li,
+ul:not([class]) li {
+  align-items: start;
+}
+
+ul:not([class]) li:before {
+  content: "·";
+  margin-right: var(--margin-01);
+}
+
+ul:not([class]) ul li:before {
+  content: "–";
+  margin-right: var(--margin-01);
+}
+
+ol:not([class]) ol,
+ul:not([class]) ul {
+  padding-left: 1em;
+}
+
+time {
+  font-feature-settings: "tnum", "tnum";
+  font-variant-numeric: tabular-nums;
+}

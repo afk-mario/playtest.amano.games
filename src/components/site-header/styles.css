@@ -1,0 +1,21 @@
+.c-site-header {
+  background: var(--color-hl);
+  color: var(--color-bg);
+}
+
+.c-site-title {
+  text-decoration: none;
+}
+
+.c-site-header > .wrapper {
+  justify-content: space-between;
+  gap: var(--spacing-01);
+}
+
+.c-site-header form {
+  border: none;
+  padding: 0;
+}
+
+.c-login-button {
+}

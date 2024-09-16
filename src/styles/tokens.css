@@ -1,0 +1,28 @@
+:root {
+  --white: #e7e7e7;
+  --yellow: #ffbc2f;
+  --black: #252323;
+  --gray: #717171;
+
+  --color-bg: var(--black);
+  --color-fg: var(--white);
+  --color-border: var(--gray);
+  --color-hl: var(--yellow);
+
+  --spacing-01: 8px;
+  --spacing-q: calc(var(--spacing-01) * 0.25);
+  --spacing-h: calc(var(--spacing-01));
+  --spacing-02: calc(var(--spacing-01) * 2);
+  --spacing-03: calc(var(--spacing-01) * 3);
+  --spacing-04: calc(var(--spacing-01) * 4);
+  --spacing-05: calc(var(--spacing-01) * 5);
+  --spacing-06: calc(var(--spacing-01) * 6);
+  --spacing-07: calc(var(--spacing-01) * 7);
+  --spacing-08: calc(var(--spacing-01) * 8);
+  --spacing-09: calc(var(--spacing-01) * 9);
+  --spacing-10: calc(var(--spacing-01) * 10);
+
+  --font-sans: sans-serif;
+  --font-mono: mono;
+  --font-serif: "Kiwi Maru", serif;
+}

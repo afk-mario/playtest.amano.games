@@ -1,0 +1,15 @@
+main {
+  flex: 1 1 auto;
+}
+
+.c-site-footer {
+  border-top: 2px solid var(--color-hl);
+}
+
+.c-site-footer .wrapper {
+  text-align: center;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+}
