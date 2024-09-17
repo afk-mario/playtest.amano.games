@@ -46,3 +46,31 @@ export async function addKey(formData: FormData) {
     .select();
   revalidatePath("/dashboard/playtester/[playtesterId]");
 }
+
+export async function changeAvatar(formData: FormData) {
+  const supabase = createClient();
+  const bucket = "media";
+  const rawFormData = {
+    avatar: formData.get("avatar") as File,
+    playtesterId: Number(formData.get("playtesterId")),
+  };
+  const ext = rawFormData.avatar.name.split(".").pop();
+  const res = await supabase.storage
+    .from(bucket)
+    .upload(`avatars/${rawFormData.playtesterId}.${ext}`, rawFormData.avatar, {
+      upsert: true,
+      contentType: rawFormData.avatar.type,
+    });
+
+  const { data } = supabase.storage
+    .from(bucket)
+    .getPublicUrl(`${res.data?.path}`);
+
+  await supabase
+    .from("playtester")
+    .update({
+      avatar: data.publicUrl,
+    })
+    .eq("id", rawFormData.playtesterId);
+  revalidatePath("/dashboard/playtester/[playtesterId]");
+}

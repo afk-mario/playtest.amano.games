@@ -7,6 +7,7 @@ import "./styles.css";
 import { editPlaytester, removeKey } from "./actions";
 import AddKeyForm from "./add-key-form";
 import { ChevronLeft, ChevronRight, ChevronsLeft } from "lucide-react";
+import ChangeAvatarForm from "./avatar-form";
 
 export default async function Page({
   params,
@@ -132,19 +133,10 @@ export default async function Page({
           <button type="submit">Remove</button>
         </form>
       )}
-      <form action="">
-        <input
-          name="playtesterId"
-          type="text"
-          value={playtesterId || undefined}
-          readOnly
-          hidden
-        />
-        <label>
-          <span>Avatar</span>
-          <input type="file" value={playtester.avatar || undefined} />
-        </label>
-      </form>
+      <ChangeAvatarForm
+        playtesterId={playtesterId}
+        avatar={playtester.avatar || undefined}
+      />
       <form action={editPlaytester}>
         <input
           name="playtesterId"
