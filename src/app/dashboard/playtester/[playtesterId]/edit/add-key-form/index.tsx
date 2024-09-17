@@ -71,7 +71,7 @@ export default function AddKeyForm({
 
       <Popover.Root open={isOpen}>
         <label className="" {...getLabelProps()}>
-          Itch.io key
+          Itch.io Key
         </label>
         <Popover.Anchor asChild>
           <input placeholder="Itch key" className="" {...getInputProps()} />

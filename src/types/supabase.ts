@@ -43,18 +43,21 @@ export type Database = {
       }
       game_key: {
         Row: {
+          claimed: boolean | null
           created_at: string
           id: number
           playtester: number | null
           url: string | null
         }
         Insert: {
+          claimed?: boolean | null
           created_at?: string
           id?: number
           playtester?: number | null
           url?: string | null
         }
         Update: {
+          claimed?: boolean | null
           created_at?: string
           id?: number
           playtester?: number | null
@@ -112,6 +115,7 @@ export type Database = {
           description: string | null
           email: string | null
           id: number
+          key_sent: string | null
           name: string | null
           notes: string | null
           signup_at: string
@@ -123,6 +127,7 @@ export type Database = {
           description?: string | null
           email?: string | null
           id?: number
+          key_sent?: string | null
           name?: string | null
           notes?: string | null
           signup_at?: string
@@ -134,6 +139,7 @@ export type Database = {
           description?: string | null
           email?: string | null
           id?: number
+          key_sent?: string | null
           name?: string | null
           notes?: string | null
           signup_at?: string
