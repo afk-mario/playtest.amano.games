@@ -17,5 +17,6 @@
   padding: 0;
 }
 
-.c-login-button {
+.c-site-header button {
+  border-color: var(--color-bg-alt);
 }

@@ -3,8 +3,8 @@ form {
   flex-flow: column;
   padding: var(--spacing-01) var(--spacing-02);
   gap: var(--spacing-01);
-  border: 2px solid var(--gray);
-  border-radius: var(--spacing-01);
+  border: var(--border);
+  border-radius: var(--border-radius);
 }
 
 input {
@@ -12,8 +12,8 @@ input {
   min-width: none;
   background: white;
   padding: var(--spacing-q) var(--spacing-01);
-  border: 2px solid var(--color-border);
-  border-radius: var(--spacing-h);
+  border: var(--border);
+  border-radius: var(--border-radius);
 }
 
 .c-button,
@@ -22,8 +22,8 @@ button {
   width: max-content;
   background: var(--color-hl);
   padding: var(--spacing-q) var(--spacing-02);
-  border: 2px solid var(--black);
-  border-radius: var(--spacing-h);
+  border: var(--border);
+  border-radius: var(--border-radius);
   cursor: pointer;
 }
 
