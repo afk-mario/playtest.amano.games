@@ -41,7 +41,7 @@ export type Database = {
           },
         ]
       }
-      "game-key": {
+      game_key: {
         Row: {
           created_at: string
           id: number

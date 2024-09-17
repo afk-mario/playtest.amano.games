@@ -1,0 +1,91 @@
+.c-add-key-popover-content {
+  width: var(--radix-popover-trigger-width);
+  border: var(--border);
+  border-radius: var(--border-radius);
+  max-height: 200px;
+  padding-bottom: var(--spacing-02);
+  overflow-y: auto;
+  background-color: var(--color-bg);
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.c-add-key-popover-content:focus {
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px, 0 0 0 2px var(--violet-7);
+}
+.c-add-key-popover-content[data-state="open"][data-side="top"] {
+  animation-name: slideDownAndFade;
+}
+.c-add-key-popover-content[data-state="open"][data-side="right"] {
+  animation-name: slideLeftAndFade;
+}
+.c-add-key-popover-content[data-state="open"][data-side="bottom"] {
+  animation-name: slideUpAndFade;
+}
+.c-add-key-popover-content[data-state="open"][data-side="left"] {
+  animation-name: slideRightAndFade;
+}
+
+.c-add-key-popover-arrow {
+  fill: var(--color-border);
+}
+
+.c-add-key-popover-header {
+  width: 100%;
+  justify-content: space-between;
+  padding: var(--spacing-h) var(--spacing-02);
+  background-color: var(--color-bg-alt);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.c-add-key-empty {
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding: var(--spacing-h) var(--spacing-02);
+}
+
+.c-add-key-popover-close {
+  display: block;
+  font-family: inherit;
+  border-radius: 100%;
+  aspect-ratio: 1/1;
+  font-size: 0.6em;
+  padding: var(--spacing-01);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-bg);
+  background: var(--color-fg);
+  border: none;
+}
+
+.c-add-key-popover-close:hover {
+  background-color: var(--color-hl);
+}
+
+.c-add-key-popover-close:focus {
+  box-shadow: 0 0 0 2px var(--color-hl);
+}
+
+.c-add-key-list {
+  list-style: none;
+  padding: 0;
+}
+
+.c-add-key-row {
+  max-width: none;
+  padding: var(--spacing-q) var(--spacing-02);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.c-add-key-row[data-hl="true"] {
+  color: var(--color-bg);
+  background: var(--color-hl);
+}

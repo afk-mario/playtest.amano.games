@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import { Circle, CircleCheck } from "lucide-react";
 import {
   createColumnHelper,
   flexRender,
@@ -15,44 +17,96 @@ import PlaytesterWidget from "../playtester-widget";
 
 import "./styles.css";
 
-const columnHelper = createColumnHelper<Tables<"playtester">>();
+type PlaytesterWithGameKeys = {
+  game_key: Tables<"game_key">[];
+} & Tables<"playtester">;
+
+const columnHelper = createColumnHelper<PlaytesterWithGameKeys>();
 const columns = [
   columnHelper.accessor("id", {
     header: "№",
-    cell: (info) => info.row.index + 1,
+    cell: (info) => (
+      <Link href={`/dashboard/playtester/${info.getValue()}/edit/`}>
+        {info.row.index + 1}
+      </Link>
+    ),
   }),
   columnHelper.display({
     id: "playtester",
     cell: (props) => {
-      return <PlaytesterWidget playtester={props.row.original} />;
+      return (
+        <Link href={`/dashboard/playtester/${props.row.id}/edit/`}>
+          <PlaytesterWidget playtester={props.row.original} />
+        </Link>
+      );
     },
   }),
   columnHelper.accessor("name", {
     header: "Name",
-    cell: (info) => info.getValue(),
+    cell: (info) => {
+      return (
+        <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
+          {info.getValue()}
+        </Link>
+      );
+    },
   }),
   columnHelper.accessor("email", {
     header: "email",
-    cell: (info) => info.getValue(),
+    cell: (info) => {
+      return (
+        <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
+          {info.getValue()}
+        </Link>
+      );
+    },
   }),
   columnHelper.accessor("tags", {
     header: "Tags",
-    cell: (info) => info.getValue(),
+    cell: (info) => {
+      return (
+        <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
+          {info.getValue()}
+        </Link>
+      );
+    },
   }),
   columnHelper.accessor("signup_at", {
     header: "Signup",
-    cell: (info) => <Time formatStr="PP | hh:mm:ss">{info.getValue()}</Time>,
+    cell: (info) => {
+      return (
+        <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
+          <Time formatStr="PP hh:mm:ss">{info.getValue()}</Time>;
+        </Link>
+      );
+    },
   }),
   columnHelper.accessor("created_at", {
     header: "Created",
-    cell: (info) => <Time formatStr="PP | hh:mm:ss">{info.getValue()}</Time>,
+    cell: (info) => {
+      return (
+        <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
+          <Time formatStr="PP hh:mm:ss">{info.getValue()}</Time>
+        </Link>
+      );
+    },
+  }),
+  columnHelper.accessor("game_key", {
+    header: "Key?",
+    cell: (info) => {
+      return (
+        <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
+          {info.getValue().length > 0 ? <CircleCheck /> : <Circle />}
+        </Link>
+      );
+    },
   }),
 ];
 
 export default function PlaytesterTable({
   defaultData,
 }: {
-  defaultData: Tables<"playtester">[];
+  defaultData: PlaytesterWithGameKeys[];
 }) {
   const [data, _setData] = React.useState(() => [...defaultData]);
 

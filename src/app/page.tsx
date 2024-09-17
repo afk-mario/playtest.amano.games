@@ -1,20 +1,21 @@
 "use server";
 
-import PlaytesterTable from "components/playtester/playtester-table";
-
+import { redirect } from "next/navigation";
 import { createClient } from "utils/supabase/server";
 
 export default async function Page() {
   const supabase = createClient();
-  const { data: playtesters } = await supabase.from("playtester").select();
+
+  const { data, error } = await supabase.auth.getUser();
+  if (error || !data?.user) {
+    // redirect("/login");
+  } else {
+    redirect("/dashboard");
+  }
 
   return (
     <div>
-      {playtesters ? (
-        <PlaytesterTable defaultData={playtesters} />
-      ) : (
-        <span>Loading</span>
-      )}
+      <h2>WELL WELL WELL</h2>
     </div>
   );
 }

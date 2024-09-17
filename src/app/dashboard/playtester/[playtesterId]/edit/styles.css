@@ -1,0 +1,12 @@
+.p-playtester-edit {
+  max-width: 800px;
+  margin: auto;
+}
+
+.p-playtester-edit-header {
+  justify-content: space-between;
+}
+
+.p-playtester-edit form button {
+  align-self: flex-end;
+}

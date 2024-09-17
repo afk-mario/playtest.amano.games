@@ -1,19 +1,32 @@
 form {
   display: flex;
   flex-flow: column;
+  background-color: var(--color-bg-alt);
   padding: var(--spacing-01) var(--spacing-02);
   gap: var(--spacing-01);
   border: var(--border);
   border-radius: var(--border-radius);
 }
 
-input {
+input,
+textarea {
   width: 100%;
   min-width: none;
   background: white;
   padding: var(--spacing-q) var(--spacing-01);
   border: var(--border);
   border-radius: var(--border-radius);
+}
+
+input:read-only,
+textarea:read-only {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  border: none;
+}
+
+textarea {
+  resize: vertical;
 }
 
 .c-button,
@@ -28,4 +41,7 @@ button {
 }
 
 label {
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-q);
 }

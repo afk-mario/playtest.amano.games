@@ -21,7 +21,7 @@ export default function PlaytesterWidget({
               alt={playtester.name || undefined}
             />
             <Avatar.Fallback className="c-avatar-fallback" delayMs={600}>
-              --
+              {playtester.id}
             </Avatar.Fallback>
           </Avatar.Root>
         </HoverCard.Trigger>
