@@ -8,6 +8,7 @@ const year = new Date().getFullYear();
 
 export const metadata: Metadata = {
   title: "Playtesters",
+  description: `Small website tro track Amano's playester feedback`,
 };
 
 export default function RootLayout({
