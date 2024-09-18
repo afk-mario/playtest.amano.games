@@ -150,24 +150,27 @@ export type Database = {
       social_profile: {
         Row: {
           created_at: string
+          display_name: string | null
           id: number
           platform: string
           playtester: number | null
-          username: string
+          social_id: string | null
         }
         Insert: {
           created_at?: string
+          display_name?: string | null
           id?: number
           platform: string
           playtester?: number | null
-          username: string
+          social_id?: string | null
         }
         Update: {
           created_at?: string
+          display_name?: string | null
           id?: number
           platform?: string
           playtester?: number | null
-          username?: string
+          social_id?: string | null
         }
         Relationships: [
           {

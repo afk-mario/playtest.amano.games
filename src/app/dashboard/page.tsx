@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import PlaytesterTable from "components/playtester/playtester-table";
+import InfoPanel from "./info-panel";
 import { createClient } from "utils/supabase/server";
 
 export default async function Dashboard() {
@@ -13,11 +14,12 @@ export default async function Dashboard() {
 
   const { data: playtesters } = await supabase
     .from("playtester")
-    .select("*,game_key(*)")
+    .select("*,game_key(*),social_profile(*)")
     .order("id");
 
   return (
-    <div>
+    <div className="stack">
+      <InfoPanel />
       {playtesters ? (
         <PlaytesterTable defaultData={playtesters} />
       ) : (

@@ -3,11 +3,15 @@
 import Link from "next/link";
 import { createClient } from "utils/supabase/server";
 
-import "./styles.css";
-import { editPlaytester, removeKey } from "./actions";
+import { editPlaytester, removeKey, updateKeyState } from "./actions";
 import AddKeyForm from "./add-key-form";
 import { ChevronLeft, ChevronRight, ChevronsLeft } from "lucide-react";
 import ChangeAvatarForm from "./avatar-form";
+
+import PlaytesterInfo from "../playtester-info";
+import PlaytesterDiscordForm from "./discord-form";
+
+import "./styles.css";
 
 export default async function Page({
   params,
@@ -18,7 +22,7 @@ export default async function Page({
   const supabase = createClient();
   const playtesterQuery = await supabase
     .from("playtester")
-    .select(`*, game_key(*)`)
+    .select(`*, game_key(*), social_profile(*)`)
     .eq("id", playtesterId)
     .single();
 
@@ -65,7 +69,7 @@ export default async function Page({
   );
 
   const nextId =
-    currentIndex < playtestersQuery.data.length ? currentIndex + 1 : null;
+    currentIndex < playtestersQuery.data.length - 1 ? currentIndex + 1 : null;
   const prevId = currentIndex > 0 ? currentIndex - 1 : null;
 
   return (
@@ -75,7 +79,7 @@ export default async function Page({
           <Link href="/dashboard">
             <ChevronsLeft />
           </Link>
-          {prevId ? (
+          {prevId != null ? (
             <Link
               href={`/dashboard/playtester/${playtestersQuery.data[prevId].id}/edit`}
             >
@@ -107,13 +111,28 @@ export default async function Page({
           {JSON.stringify(playtester, null, 2)}
         </pre>
       </details>
+      <div className="p-playtester-edit-info-container ">
+        <ChangeAvatarForm
+          playtesterId={playtesterId}
+          avatar={playtester.avatar || undefined}
+        />
+        <PlaytesterInfo playtester={playtester} />
+      </div>
+
       {playtester.game_key.length == 0 ? (
         <AddKeyForm
           playtesterId={Number(playtesterId)}
           defaultKeys={gameKeysQuery.data}
         />
       ) : (
-        <form action={removeKey} id="removeKey">
+        <form id="editKey">
+          <input
+            name="playtesterId"
+            type="text"
+            value={playtesterId || undefined}
+            readOnly
+            hidden
+          />
           <input
             name="keyId"
             type="text"
@@ -122,7 +141,10 @@ export default async function Page({
             hidden
           />
           <label>
-            <span>Itch.io Key</span>
+            <span>
+              Itch.io Key [
+              {playtester.game_key[0]?.claimed ? "Claimed" : "Pending"}]
+            </span>
             <input
               name="keyUrl"
               type="text"
@@ -130,13 +152,17 @@ export default async function Page({
               readOnly
             />
           </label>
-          <button type="submit">Remove</button>
+          <div className="cluster">
+            <button type="submit" formAction={updateKeyState}>
+              Update
+            </button>
+            <button type="submit" formAction={removeKey}>
+              Remove
+            </button>
+          </div>
         </form>
       )}
-      <ChangeAvatarForm
-        playtesterId={playtesterId}
-        avatar={playtester.avatar || undefined}
-      />
+
       <form action={editPlaytester}>
         <input
           name="playtesterId"
@@ -145,18 +171,6 @@ export default async function Page({
           readOnly
           hidden
         />
-        <label>
-          <span>Email</span>
-          <input type="email" readOnly value={playtester.email || undefined} />
-        </label>
-        <label>
-          <span>Description</span>
-          <textarea
-            readOnly
-            value={playtester.description || undefined}
-            rows={10}
-          />
-        </label>
         <label>
           <span>Notes</span>
           <textarea
@@ -167,6 +181,7 @@ export default async function Page({
         </label>
         <button type="submit">Save</button>
       </form>
+      <PlaytesterDiscordForm playtester={playtester} />
     </div>
   );
 }

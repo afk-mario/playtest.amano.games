@@ -1,0 +1,21 @@
+.c-playtester-info {
+  padding: var(--spacing-02);
+  padding-top: 40px;
+  background: var(--color-bg-alt);
+  border: var(--border);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-01);
+}
+
+.c-playtester-info-header {
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-q);
+}
+
+.c-playtester-info-social-list {
+  list-style: none;
+  padding: 0;
+}

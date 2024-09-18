@@ -41,10 +41,5 @@ Please read the info on the <a href="${gamePage}">game page</a> before playing.<
     html,
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.log(`Error sending email to ${email}:`, error);
-    }
-    console.log(`Email sent to ${email}:`, info.response);
-  });
+  return transporter.sendMail(mailOptions);
 }

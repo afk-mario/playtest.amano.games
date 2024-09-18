@@ -10,3 +10,17 @@
 .p-playtester-edit form button {
   align-self: flex-end;
 }
+
+.p-playtester-edit-info-container {
+  display: grid;
+  grid-template-rows: 50px 50px 1fr;
+}
+
+.p-playtester-edit-info-container .c-avatar-change-form {
+  z-index: 100;
+  /* align-self: center; */
+  justify-self: center;
+}
+.p-playtester-edit-info-container .c-playtester-info {
+  grid-row: 2/-1;
+}

@@ -27,6 +27,6 @@
   --spacing-10: calc(var(--spacing-01) * 10);
 
   --font-sans: sans-serif;
-  --font-mono: mono;
+  --font-mono: "Space Mono", mono;
   --font-serif: "Kiwi Maru", serif;
 }

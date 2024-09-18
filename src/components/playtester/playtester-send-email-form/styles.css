@@ -1,0 +1,17 @@
+.c-playtester-send-mail-form {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+}
+
+.c-playtester-send-mail-form button {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  color: var(--color-fg);
+  transition: color 0.2s ease;
+}
+
+.c-playtester-send-mail-form button:hover {
+  color: var(--color-hl);
+}

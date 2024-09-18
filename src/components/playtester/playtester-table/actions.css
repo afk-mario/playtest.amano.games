@@ -1,0 +1,17 @@
+.c-update-key-row-action {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+}
+
+.c-update-key-row-action button {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  color: var(--color-fg);
+  transition: color 0.2s ease;
+}
+
+.c-update-key-row-action button:hover {
+  color: var(--color-hl);
+}

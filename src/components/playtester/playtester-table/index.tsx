@@ -12,14 +12,17 @@ import {
 
 import { Tables } from "types/supabase";
 
-import Time from "components/time";
 import PlaytesterWidget from "../playtester-widget";
 
+import { updateKeyState } from "app/dashboard/playtester/[playtesterId]/edit/actions";
+
 import "./styles.css";
-import { markAsSent } from "app/dashboard/actions";
+import "./actions.css";
+import { PlaytesterSendEmailForm } from "../playtester-send-email-form";
 
 type PlaytesterWithGameKeys = {
   game_key: Tables<"game_key">[];
+  social_profile: Tables<"social_profile">[];
 } & Tables<"playtester">;
 
 function IndeterminateCheckbox({
@@ -83,11 +86,7 @@ const columns = [
   columnHelper.display({
     id: "playtester",
     cell: (props) => {
-      return (
-        <Link href={`/dashboard/playtester/${props.row.getValue("id")}/edit/`}>
-          <PlaytesterWidget playtester={props.row.original} />
-        </Link>
-      );
+      return <PlaytesterWidget playtester={props.row.original} />;
     },
   }),
   columnHelper.accessor("name", {
@@ -114,8 +113,20 @@ const columns = [
     header: "Tags",
     cell: (info) => {
       return (
-        <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
-          {info.getValue()}
+        <Link
+          className="cell-tag"
+          href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}
+        >
+          <ul className="c-tag-list">
+            {info
+              .getValue()
+              ?.split(",")
+              .map((tag, i) => (
+                <li key={i}>
+                  <span className="c-tag">{tag}</span>
+                </li>
+              ))}
+          </ul>
         </Link>
       );
     },
@@ -157,14 +168,60 @@ const columns = [
   columnHelper.accessor("key_sent", {
     header: "Sent?",
     cell: (info) => {
-      return (
-        <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
-          {info.getValue() ? (
+      const playtester = info.row.original;
+      const [gameKey] = info.row.original.game_key;
+      const hasKey = gameKey != null;
+      const keySent = info.getValue();
+      if (keySent) {
+        return (
+          <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
             <CircleCheck color="var(--color-hl)" />
-          ) : (
-            <Circle />
-          )}
-        </Link>
+          </Link>
+        );
+      }
+      if (hasKey) {
+        return <PlaytesterSendEmailForm playtester={playtester} />;
+      }
+      return <Circle />;
+    },
+  }),
+  columnHelper.accessor((row) => row.game_key[0]?.claimed, {
+    header: "Claimed?",
+    cell: (info) => {
+      const gameKeys: Tables<"game_key">[] =
+        info.row.getValue("game_key") || [];
+      const [gameKey] = gameKeys;
+      return (
+        <form action={updateKeyState} className="c-update-key-row-action">
+          <input
+            name="playtesterId"
+            type="text"
+            value={info.row.getValue("id")}
+            readOnly
+            hidden
+          />
+          <input
+            name="keyId"
+            type="text"
+            value={gameKey?.id || undefined}
+            readOnly
+            hidden
+          />
+          <input
+            name="keyUrl"
+            type="text"
+            value={gameKey?.url || undefined}
+            readOnly
+            hidden
+          />
+          <button type="submit" disabled={gameKey == null}>
+            {info.getValue() ? (
+              <CircleCheck color="var(--color-hl)" />
+            ) : (
+              <Circle />
+            )}
+          </button>
+        </form>
       );
     },
   }),
@@ -191,31 +248,15 @@ export default function PlaytesterTable({
     },
   });
 
-  const selectedIds = table
+  const selectedCount = table.getSelectedRowModel().flatRows.length;
+  const selectedPlaytesters = table
     .getSelectedRowModel()
-    .rows.map((row) => row.getValue("id"))
-    .join(",");
+    .rows.map((row) => row.original);
 
   return (
-    <div className="c-table-container | stack">
-      <div className="cluster">
-        <form action={markAsSent}>
-          <input
-            name="selected"
-            type="text"
-            value={selectedIds}
-            hidden
-            readOnly
-          />
-          <input
-            name="timestamp"
-            type="text"
-            value="2024-09-12 01:12:08+00"
-            hidden
-            readOnly
-          />
-          <button type="submit">Mark as sent</button>
-        </form>
+    <div className="c-playtester-table c-table-container | stack">
+      <div className="c-playtester-table-actions | cluster">
+        <span>{selectedCount} selected</span>
       </div>
       <table>
         <thead className="c-table-header">

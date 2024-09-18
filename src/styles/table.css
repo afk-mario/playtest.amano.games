@@ -1,0 +1,121 @@
+.c-table-container {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+.c-table-container table {
+  width: 100%;
+  border-spacing: 0;
+}
+
+.c-table-container tbody::before {
+  content: "@";
+  display: block;
+  line-height: var(--spacing-01);
+  text-indent: -99999px;
+}
+
+.c-table-container tr {
+  transition: background-color 0.2s ease;
+}
+
+.c-table-container th,
+.c-table-container td {
+  margin: 0;
+  padding: 0.5rem;
+  text-align: left;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.c-table-header-center {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.c-table-header:hover {
+  --color-border: var(--color-hl);
+}
+
+.c-table-header th {
+  top: var(--spacing-01);
+  position: sticky;
+  color: var(--color-bg);
+  background-color: var(--color-fg);
+  border-bottom: var(--border);
+  border-top: var(--border);
+  transition: color-border 0.2s ease;
+}
+
+.c-table-header th:first-child {
+  border-left: var(--border);
+  border-radius: var(--spacing-01) 0 0 var(--spacing-01);
+}
+
+.c-table-header th:last-child {
+  border-radius: 0 var(--spacing-01) var(--spacing-01) 0;
+  border-right: var(--border);
+}
+
+.c-table-header-wrapper {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: var(--fg);
+  margin: 0;
+}
+
+.c-table-header-wrapper[data-can-sort="true"] {
+  cursor: pointer;
+}
+
+.c-table-header-wrapper svg {
+  margin-left: var(--spacing-01);
+}
+
+.c-table-row {
+  transition: background-color 0.2s ease;
+}
+
+.c-table-row:nth-child(odd) td {
+  background-color: var(--color-bg-alt);
+}
+
+.c-table-row:first-child td {
+  border-top: var(--border);
+}
+
+.c-table-row:last-child td {
+  border-bottom: var(--border);
+}
+
+.c-table-row td:first-child {
+  border-left: var(--border);
+}
+
+.c-table-row td:last-child {
+  border-right: var(--border);
+}
+
+.c-table-row:first-child td:first-child {
+  border-radius: var(--border-radius) 0 0 0;
+}
+
+.c-table-row:first-child td:last-child {
+  border-radius: 0 var(--border-radius) 0 0;
+}
+
+.c-table-row:last-child td:first-child {
+  border-radius: 0 0 0 var(--border-radius);
+}
+
+.c-table-row:last-child td:last-child {
+  border-radius: 0 0 var(--border-radius) 0;
+}
