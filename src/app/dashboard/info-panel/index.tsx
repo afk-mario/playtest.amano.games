@@ -38,17 +38,34 @@ export default async function InfoPanel() {
   }
 
   return (
-    <div>
-      <pre>playtesters: {queryPlaytestersTotal.count}</pre>
-      <pre>withKey: {queryPlaytestersWithKey.count}</pre>
-      <pre>
-        without:{" "}
-        {(queryPlaytestersTotal?.count || 0) -
-          (queryPlaytestersWithKey?.count || 0)}
+    <details>
+      <summary>Show info</summary>
+      <pre
+        style={{
+          display: "flex",
+          flexFlow: "column",
+          gap: "var(--spacing-q)",
+          padding: "var(--spacing-02)",
+          border: "var(--border)",
+          borderRadius: "var(--border-radius)",
+          background: "var(--color-bg-alt)",
+          width: "100%",
+          overflow: "auto",
+        }}
+      >
+        <span>playtesters: {queryPlaytestersTotal.count}</span>
+        <span>withKey: {queryPlaytestersWithKey.count}</span>
+        <span>
+          without:{" "}
+          {(queryPlaytestersTotal?.count || 0) -
+            (queryPlaytestersWithKey?.count || 0)}
+        </span>
+        <span>pending email: {queryPlaytestersNotSent.count}</span>
+        <span>
+          keys sent but unclaimed: {queryGameKeysSentAndUnclaimed.count}
+        </span>
+        <span>available keys: {queryGameKeysAvailable.count}</span>
       </pre>
-      <pre>pending email: {queryPlaytestersNotSent.count}</pre>
-      <pre>keys sent but unclaimed: {queryGameKeysSentAndUnclaimed.count}</pre>
-      <pre>available keys: {queryGameKeysAvailable.count}</pre>
-    </div>
+    </details>
   );
 }
