@@ -23,6 +23,7 @@ import { PlaytesterSendEmailForm } from "../playtester-send-email-form";
 type PlaytesterWithGameKeys = {
   game_key: Tables<"game_key">[];
   social_profile: Tables<"social_profile">[];
+  feedback: Tables<"feedback">[];
 } & Tables<"playtester">;
 
 function IndeterminateCheckbox({
@@ -223,6 +224,15 @@ const columns = [
           </button>
         </form>
       );
+    },
+  }),
+  columnHelper.accessor((row) => row.feedback.length > 0, {
+    header: "Feedback?",
+    cell: (info) => {
+      if (info.getValue()) {
+        return <CircleCheck color="var(--color-hl)" />;
+      }
+      return <Circle />;
     },
   }),
 ];

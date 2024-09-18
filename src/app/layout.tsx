@@ -1,9 +1,14 @@
 import React from "react";
+import { Metadata } from "next";
 
 import "styles/global.css";
 import SiteHeader from "components/site-header";
 
 const year = new Date().getFullYear();
+
+export const metadata: Metadata = {
+  title: "Playtesters",
+};
 
 export default function RootLayout({
   children,

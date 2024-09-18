@@ -16,6 +16,7 @@ export type Database = {
           platform: string | null
           playtester: number
           text: string | null
+          timestamp: string
         }
         Insert: {
           created_at?: string
@@ -23,6 +24,7 @@ export type Database = {
           platform?: string | null
           playtester: number
           text?: string | null
+          timestamp?: string
         }
         Update: {
           created_at?: string
@@ -30,6 +32,7 @@ export type Database = {
           platform?: string | null
           playtester?: number
           text?: string | null
+          timestamp?: string
         }
         Relationships: [
           {

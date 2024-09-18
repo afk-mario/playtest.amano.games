@@ -205,3 +205,21 @@ export async function scrapeDiscordAvatar(formData: FormData) {
     .eq("id", playtesterId);
   revalidatePath("/dashboard/playtester/[playtesterId]", "page");
 }
+
+export async function addFeedback(formData: FormData) {
+  const supabase = createClient();
+  const { playtesterId, feedbackPlatform, feedbackText } = {
+    playtesterId: Number(formData.get("playtesterId")),
+    feedbackPlatform: formData.get("feedbackPlatform") as string,
+    feedbackText: formData.get("feedbackText") as string,
+  };
+  await supabase
+    .from("feedback")
+    .insert({
+      playtester: playtesterId,
+      platform: feedbackPlatform,
+      text: feedbackText,
+    })
+    .eq("id", playtesterId);
+  revalidatePath("/dashboard/playtester/[playtesterId]", "page");
+}

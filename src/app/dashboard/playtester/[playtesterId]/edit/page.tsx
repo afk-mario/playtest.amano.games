@@ -12,6 +12,8 @@ import PlaytesterInfo from "../playtester-info";
 import PlaytesterDiscordForm from "./discord-form";
 
 import "./styles.css";
+import PlaytesterAddFeedbackForm from "./add-feedback-form";
+import { PlaytesterFeedbackItem } from "components/playtester/playtester-feedback-item";
 
 export default async function Page({
   params,
@@ -22,7 +24,7 @@ export default async function Page({
   const supabase = createClient();
   const playtesterQuery = await supabase
     .from("playtester")
-    .select(`*, game_key(*), social_profile(*)`)
+    .select(`*, game_key(*), social_profile(*), feedback(*)`)
     .eq("id", playtesterId)
     .single();
 
@@ -182,6 +184,18 @@ export default async function Page({
         <button type="submit">Save</button>
       </form>
       <PlaytesterDiscordForm playtester={playtester} />
+      <PlaytesterAddFeedbackForm playtester={playtester} />
+      <div className="stack">
+        {playtester.feedback.map((item) => {
+          return (
+            <PlaytesterFeedbackItem
+              key={item.id}
+              feedback={item}
+              playtester={playtester}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }

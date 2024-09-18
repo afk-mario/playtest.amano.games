@@ -1,0 +1,27 @@
+.c-feedback-item {
+  --avatar-size: 100px;
+
+  display: flex;
+  flex-flow: row nowrap;
+  gap: var(--spacing-02);
+
+  border: var(--border);
+  border-radius: var(--border-radius);
+  background-color: var(--color-bg-alt);
+  padding: var(--spacing-02);
+}
+
+.c-feedback-item-widget {
+}
+
+.c-feedback-item header {
+}
+
+.c-feedback-item .c-feedback-item-content {
+}
+.c-feedback-item-content {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-q);
+}

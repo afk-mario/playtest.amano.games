@@ -48,6 +48,11 @@ h2,
 h3 {
 }
 
+hr {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+}
+
 a {
   color: currentColor;
   transition: all 0.2s ease;
@@ -90,32 +95,6 @@ code:not([class]) {
   color: var(--yellow);
   border-radius: var(--margin-01);
   background: var(--gray);
-}
-
-ol:not([class]),
-ul:not([class]) {
-  padding: 0;
-  list-style: none;
-}
-
-ol:not([class]) li,
-ul:not([class]) li {
-  align-items: start;
-}
-
-ul:not([class]) li:before {
-  content: "·";
-  margin-right: var(--margin-01);
-}
-
-ul:not([class]) ul li:before {
-  content: "–";
-  margin-right: var(--margin-01);
-}
-
-ol:not([class]) ol,
-ul:not([class]) ul {
-  padding-left: 1em;
 }
 
 time {

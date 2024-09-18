@@ -33,6 +33,16 @@ export default async function InfoPanel() {
     .eq("claimed", false)
     .not("playtester.key_sent", "is", null);
 
+  const queryGameKeysClaimed = await supabase
+    .from("game_key")
+    .select("", { count: "exact", head: true })
+    .eq("claimed", true);
+
+  const queryPlaytestersWithFeedback = await supabase
+    .from("playtester")
+    .select("feedback!inner()", { count: "exact", head: true })
+    .not("feedback", "is", null);
+
   if (queryPlaytestersTotal.error) {
     return null;
   }
@@ -64,7 +74,12 @@ export default async function InfoPanel() {
         <span>
           keys sent but unclaimed: {queryGameKeysSentAndUnclaimed.count}
         </span>
+        <span>keys claimed: {queryGameKeysClaimed.count}</span>
         <span>available keys: {queryGameKeysAvailable.count}</span>
+        <span>
+          playtesters that provide feedback:{" "}
+          {queryPlaytestersWithFeedback.count}
+        </span>
       </pre>
     </details>
   );
