@@ -20,11 +20,11 @@ export default function PlaytesterAddFeedbackForm({
       />
       <label>
         <span>Platform</span>
-        <input name="feedbackPlatform" type="text" />
+        <input name="feedbackPlatform" type="text" required />
       </label>
       <label>
         <span>Feedback</span>
-        <textarea name="feedbackText" rows={10} />
+        <textarea name="feedbackText" rows={10} required />
       </label>
       <button type="submit">Add</button>
     </form>
