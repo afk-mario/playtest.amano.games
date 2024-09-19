@@ -19,9 +19,6 @@
 
 .c-feedback-item .c-feedback-item-content {
 }
-.c-feedback-item-content {
+.c-feedback-item-text {
   width: 100%;
-  display: flex;
-  flex-flow: column;
-  gap: var(--spacing-q);
 }

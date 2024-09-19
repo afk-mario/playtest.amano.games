@@ -28,7 +28,7 @@ export function PlaytesterFeedbackItem({
           <Time formatStr="PP hh:mm:ss">{feedback.timestamp}</Time>
         </header>
         <hr />
-        <div className="c-feedback-item-content">
+        <div className="c-feedback-item-text | stack">
           <Markdown>{feedback.text}</Markdown>
         </div>
       </div>
