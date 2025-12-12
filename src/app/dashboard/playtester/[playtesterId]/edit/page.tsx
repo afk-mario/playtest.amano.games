@@ -23,7 +23,7 @@ export default async function Page(props: {
   const supabase = await createClient();
   const playtesterQuery = await supabase
     .from("playtester")
-    .select(`*, game_key(*), social_profile(*), feedback(*)`)
+    .select(`*, game_key(*, game:game(*)), social_profile(*), feedback(*)`)
     .eq("id", playtesterId)
     .single();
 
@@ -65,8 +65,9 @@ export default async function Page(props: {
   }
 
   const playtester = playtesterQuery.data;
+  const [firstKey] = playtester.game_key;
   const currentIndex = playtestersQuery.data.findIndex(
-    (item) => item.id === Number(playtesterId),
+    (item) => item.id === Number(playtesterId)
   );
 
   const nextId =
@@ -137,20 +138,26 @@ export default async function Page(props: {
           <input
             name="keyId"
             type="text"
-            value={playtester.game_key[0]?.id || undefined}
+            value={firstKey?.id || undefined}
             readOnly
             hidden
           />
           <label>
             <span>
-              Itch.io Key [
-              {playtester.game_key[0]?.claimed ? "Claimed" : "Pending"}]
+              Itch.io Key [{firstKey?.claimed ? "Claimed" : "Pending"}]
             </span>
             <input
               name="keyUrl"
               type="text"
-              value={playtester.game_key[0]?.url || undefined}
+              value={firstKey?.url || undefined}
               readOnly
+            />
+            <input
+              name="gameId"
+              type="text"
+              value={firstKey?.game?.itch_id || undefined}
+              readOnly
+              hidden
             />
           </label>
           <div className="cluster">

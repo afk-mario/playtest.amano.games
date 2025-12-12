@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { sendEmail } from "utils/email";
 import { getDiscordAvatarURL, getDiscordUserData } from "utils/social/discord";
-import { getKeyInfo } from "utils/social/itch";
+import { extractItchDownloadToken, getKeyInfo } from "utils/social/itch";
 import { createClient } from "utils/supabase/server";
 
 export async function editPlaytester(formData: FormData) {
@@ -80,31 +80,40 @@ export async function changeAvatar(formData: FormData) {
 
 export async function updateKeyState(formData: FormData) {
   const supabase = await createClient();
-  const { keyUrl, playtesterId } = {
+  const { keyUrl, gameId, playtesterId } = {
     keyUrl: formData.get("keyUrl") as string,
+    gameId: formData.get("gameId") as string,
     playtesterId: Number(formData.get("playtesterId")),
   };
 
-  const downloadKey = keyUrl.slice(72);
-  const itchGameKey = await getKeyInfo(downloadKey);
-  const owner = itchGameKey.download_key?.owner;
-  const isClaimed = owner != null;
+  const itchDownloadKey = extractItchDownloadToken(keyUrl);
 
-  await supabase
-    .from("game_key")
-    .update({ claimed: isClaimed })
-    .eq("url", keyUrl);
+  if (itchDownloadKey != null) {
+    const itchGameKeyInfo = await getKeyInfo(itchDownloadKey, gameId);
+    const { errors, download_key } = itchGameKeyInfo;
+    if (errors) {
+      console.error(`Failed to check key ${itchDownloadKey}`);
+      console.error(errors);
+    }
+    const owner = download_key?.owner;
+    const isClaimed = owner != null;
 
-  if (isClaimed) {
-    await supabase.from("social_profile").upsert(
-      {
-        playtester: playtesterId,
-        platform: "itch.io",
-        display_name: owner.username,
-        social_id: owner.id.toString(),
-      },
-      { onConflict: "playtester,platform", ignoreDuplicates: false },
-    );
+    await supabase
+      .from("game_key")
+      .update({ claimed: isClaimed })
+      .eq("url", keyUrl);
+
+    if (isClaimed) {
+      await supabase.from("social_profile").upsert(
+        {
+          playtester: playtesterId,
+          platform: "itch.io",
+          display_name: owner.username,
+          social_id: owner.id.toString(),
+        },
+        { onConflict: "playtester,platform", ignoreDuplicates: false }
+      );
+    }
   }
 
   revalidatePath("/dashboard/playtester/[playtesterId]", "page");
@@ -153,7 +162,7 @@ export async function saveDiscord(formData: FormData) {
       playtester: playtesterId,
       social_id: discordSocialId,
     },
-    { onConflict: "playtester,platform", ignoreDuplicates: false },
+    { onConflict: "playtester,platform", ignoreDuplicates: false }
   );
   revalidatePath("/dashboard/playtester/[playtesterId]", "page");
   revalidatePath("/dashboard/", "page");

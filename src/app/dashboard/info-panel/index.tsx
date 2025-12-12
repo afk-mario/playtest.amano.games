@@ -11,27 +11,27 @@ export default async function InfoPanel() {
     return null;
   }
 
+  const queryGameKeysAvailable = await supabase
+    .from("game_key")
+    .select("", { count: "exact", head: true })
+    .is("playtester", null);
+
   const queryPlaytestersWithKey = await supabase
     .from("game_key")
     .select("", { count: "exact", head: true })
     .not("playtester", "is", null);
 
   const queryPlaytestersNotSent = await supabase
-    .from("playtester")
-    .select("game_key!inner()", { count: "exact", head: true })
-    .is("key_sent", null)
-    .not("game_key", "is", null);
-
-  const queryGameKeysAvailable = await supabase
     .from("game_key")
     .select("", { count: "exact", head: true })
-    .is("playtester", null);
+    .not("playtester", "is", null)
+    .is("key_sent", null);
 
   const queryGameKeysSentAndUnclaimed = await supabase
     .from("game_key")
-    .select("playtester!inner()", { count: "exact", head: true })
-    .eq("claimed", false)
-    .not("playtester.key_sent", "is", null);
+    .select("", { count: "exact", head: true })
+    .not("key_sent", "is", null)
+    .eq("claimed", false);
 
   const queryGameKeysClaimed = await supabase
     .from("game_key")

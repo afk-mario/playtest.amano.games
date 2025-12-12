@@ -1,5 +1,6 @@
 export interface ItchGameKey {
-  download_key: {
+  errors?: string[];
+  download_key?: {
     id: number;
     created_at: string;
     downloads: number;
@@ -18,8 +19,12 @@ export interface ItchGameKey {
   };
 }
 
-export async function getKeyInfo(key: string) {
-  const gameId = 2962024;
+export function extractItchDownloadToken(url: string) {
+  const match = url.match(/\/download\/([^/?#]+)/);
+  return match ? match[1] : null;
+}
+
+export async function getKeyInfo(key: string, gameId: string) {
   const baseUrl = `https://itch.io/api/1/${process.env.ITCH_API_KEY!}`;
   const url = `${baseUrl}/game/${gameId}/download_keys?download_key=${key}`;
   const res = await fetch(url);

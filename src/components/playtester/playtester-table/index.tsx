@@ -166,13 +166,14 @@ const columns = [
       );
     },
   }),
-  columnHelper.accessor("key_sent", {
+  columnHelper.accessor("game_key", {
+    id: "key_sent",
     header: "Sent?",
     cell: (info) => {
       const playtester = info.row.original;
-      const [gameKey] = info.row.original.game_key;
+      const [gameKey] = info.getValue();
       const hasKey = gameKey != null;
-      const keySent = info.getValue();
+      const keySent = gameKey?.key_sent != null;
       if (keySent) {
         return (
           <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
@@ -242,7 +243,7 @@ export default function PlaytesterTable({
 }: {
   defaultData: PlaytesterWithGameKeys[];
 }) {
-  const [data, _setData] = React.useState(() => [...defaultData]);
+  const [data] = React.useState(() => [...defaultData]);
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
@@ -259,9 +260,9 @@ export default function PlaytesterTable({
   });
 
   const selectedCount = table.getSelectedRowModel().flatRows.length;
-  const selectedPlaytesters = table
-    .getSelectedRowModel()
-    .rows.map((row) => row.original);
+  // const selectedPlaytesters = table
+  //   .getSelectedRowModel()
+  //   .rows.map((row) => row.original);
 
   return (
     <div className="c-playtester-table c-table-container | stack">
