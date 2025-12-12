@@ -1,5 +1,6 @@
 import { Tables } from "types/supabase";
 
+import Link from "next/link";
 import * as Avatar from "@radix-ui/react-avatar";
 import * as HoverCard from "@radix-ui/react-hover-card";
 
@@ -19,16 +20,18 @@ export default function PlaytesterWidget({
     <div className="c-playterster-widget">
       <HoverCard.Root openDelay={300} closeDelay={400}>
         <HoverCard.Trigger asChild>
-          <Avatar.Root className="c-playtester-widget-trigger c-avatar">
-            <Avatar.Image
-              className="c-avatar-image"
-              src={playtester.avatar || gravatar}
-              alt={playtester.name || undefined}
-            />
-            <Avatar.Fallback className="c-avatar-fallback" delayMs={600}>
-              {playtester.id}
-            </Avatar.Fallback>
-          </Avatar.Root>
+          <Link href={`/dashboard/playtester/${playtester.id}/edit/`}>
+            <Avatar.Root className="c-playtester-widget-trigger c-avatar">
+              <Avatar.Image
+                className="c-avatar-image"
+                src={playtester.avatar || gravatar}
+                alt={playtester.name || undefined}
+              />
+              <Avatar.Fallback className="c-avatar-fallback" delayMs={600}>
+                {playtester.id}
+              </Avatar.Fallback>
+            </Avatar.Root>
+          </Link>
         </HoverCard.Trigger>
         <HoverCard.Portal>
           <HoverCard.Content

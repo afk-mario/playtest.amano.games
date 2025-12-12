@@ -1,6 +1,7 @@
 import { Tables } from "types/supabase";
 import Markdown from "react-markdown";
 
+import Link from "next/link";
 import PlaytesterWidget from "../playtester-widget";
 import Time from "components/time";
 
@@ -22,9 +23,11 @@ export function PlaytesterFeedbackItem({
       </div>
       <div className="c-feedback-item-content">
         <header>
-          <h3>
-            {playtester.name} @ {feedback.platform}
-          </h3>
+          <Link href={`/dashboard/playtester/${playtester.id}/edit/`}>
+            <h3>
+              {playtester.name} @ {feedback.platform}
+            </h3>
+          </Link>
           <Time formatStr="PP hh:mm:ss">{feedback.timestamp}</Time>
         </header>
         <hr />
