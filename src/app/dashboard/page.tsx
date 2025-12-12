@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import "./styles.css";
@@ -18,11 +17,10 @@ export default async function Dashboard() {
   const { data: feedbacks } = await supabase
     .from("feedback")
     .select("*,playtester(*,social_profile(*))")
-    .order("id");
+    .order("id", { ascending: false });
 
   return (
     <div className="stack">
-      <Link href="/dashboard/playtester">Playtesters</Link>
       <InfoPanel />
       <div className="p-feedback-list stack">
         {feedbacks?.map((item, i) => {

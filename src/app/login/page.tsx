@@ -11,7 +11,7 @@ export default function LoginPage() {
       <input id="password" name="password" type="password" required />
 
       <div className="c-login-form-actions cluster">
-        <button formAction={login}>Log in</button>
+        <button formAction={login}>Submit</button>
       </div>
     </form>
   );

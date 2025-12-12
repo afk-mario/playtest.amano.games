@@ -3,8 +3,26 @@
   color: var(--color-bg);
 }
 
+.c-site-header .wrapper {
+  padding: var(--spacing-02) var(--spacing-04);
+}
+
 .c-site-title {
   text-decoration: none;
+}
+
+.c-site-nav {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-01);
+}
+
+.c-site-title svg {
+  display: block;
+  height: 45px;
+  width: auto;
 }
 
 .c-site-header > .wrapper {

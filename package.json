@@ -6,6 +6,7 @@
   "repository": "git@github.com:afk-mario/playtest.amano.games.git",
   "author": "Mario Carballo Zama <afk@ellugar.co>",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -19,6 +20,7 @@
     "@radix-ui/react-popover": "^1.1.1",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.87.1",
+    "@svgr/webpack": "^8.1.0",
     "@tanstack/react-table": "^8.20.5",
     "date-fns": "^4.0.0",
     "downshift": "^9.0.8",
@@ -28,6 +30,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-dropzone": "^14.2.3",
+    "react-icons": "^5.5.0",
     "react-markdown": "^9.0.1"
   },
   "devDependencies": {

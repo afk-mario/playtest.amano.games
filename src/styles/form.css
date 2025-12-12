@@ -38,6 +38,19 @@ button {
   border: var(--border);
   border-radius: var(--border-radius);
   cursor: pointer;
+  transition: background-color ease 0.1s;
+  font-weight: bold;
+  display: inline-flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-q);
+}
+
+button:hover,
+.c-button:hover {
+  color: var(--color-bg);
+  background: var(--color-fg);
 }
 
 label {
