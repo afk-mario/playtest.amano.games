@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "utils/supabase/server";
 
 export async function markAsSent(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const rawFormData = {
     selected: formData.get("selected")!.toString().split(","),
     timestamp: formData.get("timestamp")?.toString(),

@@ -1,7 +1,7 @@
 import { createClient } from "utils/supabase/server";
 
 export default async function InfoPanel() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const queryPlaytestersTotal = await supabase
     .from("playtester")

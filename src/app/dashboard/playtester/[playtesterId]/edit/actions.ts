@@ -7,7 +7,7 @@ import { getKeyInfo } from "utils/social/itch";
 import { createClient } from "utils/supabase/server";
 
 export async function editPlaytester(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const rawFormData = {
     playtesterId: formData.get("playtesterId"),
     notes: formData.get("notes")?.toString(),
@@ -22,7 +22,7 @@ export async function editPlaytester(formData: FormData) {
 }
 
 export async function removeKey(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const rawFormData = {
     keyId: formData.get("keyId"),
   };
@@ -36,7 +36,7 @@ export async function removeKey(formData: FormData) {
 }
 
 export async function addKey(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const rawFormData = {
     playtesterId: formData.get("playtesterId"),
     keyId: formData.get("keyId"),
@@ -51,7 +51,7 @@ export async function addKey(formData: FormData) {
 }
 
 export async function changeAvatar(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const bucket = "media";
   const rawFormData = {
     avatar: formData.get("avatar") as File,
@@ -79,7 +79,7 @@ export async function changeAvatar(formData: FormData) {
 }
 
 export async function updateKeyState(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { keyUrl, playtesterId } = {
     keyUrl: formData.get("keyUrl") as string,
     playtesterId: Number(formData.get("playtesterId")),
@@ -103,7 +103,7 @@ export async function updateKeyState(formData: FormData) {
         display_name: owner.username,
         social_id: owner.id.toString(),
       },
-      { onConflict: "playtester,platform", ignoreDuplicates: false }
+      { onConflict: "playtester,platform", ignoreDuplicates: false },
     );
   }
 
@@ -113,7 +113,7 @@ export async function updateKeyState(formData: FormData) {
 
 export async function sendGameKeyEmail(formData: FormData) {
   console.log("Sending email");
-  const supabase = createClient();
+  const supabase = await createClient();
   const { keyUrl, playtesterId, playtesterName, playtesterEmail } = {
     keyUrl: formData.get("keyUrl") as string,
     playtesterId: Number(formData.get("playtesterId")),
@@ -141,7 +141,7 @@ export async function sendGameKeyEmail(formData: FormData) {
 }
 
 export async function saveDiscord(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { playtesterId, discordSocialId } = {
     playtesterId: Number(formData.get("playtesterId")),
     discordSocialId: formData.get("discordSocialId") as string,
@@ -153,14 +153,14 @@ export async function saveDiscord(formData: FormData) {
       playtester: playtesterId,
       social_id: discordSocialId,
     },
-    { onConflict: "playtester,platform", ignoreDuplicates: false }
+    { onConflict: "playtester,platform", ignoreDuplicates: false },
   );
   revalidatePath("/dashboard/playtester/[playtesterId]", "page");
   revalidatePath("/dashboard/", "page");
 }
 
 export async function updateDiscord(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { discordSocialId, discordProfileId } = {
     discordProfileId: Number(formData.get("discordProfileId")),
     discordSocialId: formData.get("discordSocialId") as string,
@@ -178,7 +178,7 @@ export async function updateDiscord(formData: FormData) {
 }
 
 export async function scrapeDiscordAvatar(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const bucket = "media";
   const { playtesterId, discordSocialId } = {
     playtesterId: Number(formData.get("playtesterId")),
@@ -207,7 +207,7 @@ export async function scrapeDiscordAvatar(formData: FormData) {
 }
 
 export async function addFeedback(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { playtesterId, feedbackPlatform, feedbackText } = {
     playtesterId: Number(formData.get("playtesterId")),
     feedbackPlatform: formData.get("feedbackPlatform") as string,

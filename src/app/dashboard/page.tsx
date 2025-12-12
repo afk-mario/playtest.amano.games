@@ -8,7 +8,7 @@ import { createClient } from "utils/supabase/server";
 import { PlaytesterFeedbackItem } from "components/playtester/playtester-feedback-item";
 
 export default async function Dashboard() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase.auth.getUser();
   if (error || !data?.user) {
@@ -25,9 +25,10 @@ export default async function Dashboard() {
       <Link href="/dashboard/playtester">Playtesters</Link>
       <InfoPanel />
       <div className="p-feedback-list stack">
-        {feedbacks?.map((item) => {
+        {feedbacks?.map((item, i) => {
           return (
             <PlaytesterFeedbackItem
+              key={i}
               feedback={item}
               playtester={item?.playtester}
             />

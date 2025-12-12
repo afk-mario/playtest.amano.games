@@ -15,13 +15,12 @@ import "./styles.css";
 import PlaytesterAddFeedbackForm from "./add-feedback-form";
 import { PlaytesterFeedbackItem } from "components/playtester/playtester-feedback-item";
 
-export default async function Page({
-  params,
-}: {
-  params: { playtesterId: string };
+export default async function Page(props: {
+  params: Promise<{ playtesterId: string }>;
 }) {
+  const params = await props.params;
   const { playtesterId } = params;
-  const supabase = createClient();
+  const supabase = await createClient();
   const playtesterQuery = await supabase
     .from("playtester")
     .select(`*, game_key(*), social_profile(*), feedback(*)`)
@@ -67,7 +66,7 @@ export default async function Page({
 
   const playtester = playtesterQuery.data;
   const currentIndex = playtestersQuery.data.findIndex(
-    (item) => item.id === Number(playtesterId)
+    (item) => item.id === Number(playtesterId),
   );
 
   const nextId =

@@ -6,7 +6,7 @@ import { logout } from "./actions";
 import "./styles.css";
 
 export default async function SiteHeader() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase.auth.getUser();
   const isLoggedIn = data?.user != null && error == null;
 
