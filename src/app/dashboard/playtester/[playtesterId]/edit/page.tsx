@@ -3,7 +3,12 @@
 import Link from "next/link";
 import { createClient } from "utils/supabase/server";
 
-import { editPlaytester, removeKey, updateKeyState } from "./actions";
+import {
+  editPlaytester,
+  removeKey,
+  sendGameKeyEmail,
+  updateKeyState,
+} from "./actions";
 import AddKeyForm from "./add-key-form";
 import { ChevronLeft, ChevronRight, ChevronsLeft } from "lucide-react";
 import ChangeAvatarForm from "./avatar-form";
@@ -14,6 +19,7 @@ import PlaytesterDiscordForm from "./discord-form";
 import "./styles.css";
 import PlaytesterAddFeedbackForm from "./add-feedback-form";
 import { PlaytesterFeedbackItem } from "components/playtester/playtester-feedback-item";
+import { Tables } from "types/supabase";
 
 export default async function Page(props: {
   params: Promise<{ playtesterId: string }>;
@@ -65,7 +71,6 @@ export default async function Page(props: {
   }
 
   const playtester = playtesterQuery.data;
-  const [firstKey] = playtester.game_key;
   const currentIndex = playtestersQuery.data.findIndex(
     (item) => item.id === Number(playtesterId)
   );
@@ -121,55 +126,78 @@ export default async function Page(props: {
         <PlaytesterInfo playtester={playtester} />
       </div>
 
-      {playtester.game_key.length == 0 ? (
-        <AddKeyForm
-          playtesterId={Number(playtesterId)}
-          defaultKeys={gameKeysQuery.data}
-        />
-      ) : (
-        <form id="editKey">
-          <input
-            name="playtesterId"
-            type="text"
-            value={playtesterId || undefined}
-            readOnly
-            hidden
-          />
-          <input
-            name="keyId"
-            type="text"
-            value={firstKey?.id || undefined}
-            readOnly
-            hidden
-          />
-          <label>
-            <span>
-              Itch.io Key [{firstKey?.claimed ? "Claimed" : "Pending"}]
-            </span>
-            <input
-              name="keyUrl"
-              type="text"
-              value={firstKey?.url || undefined}
-              readOnly
-            />
-            <input
-              name="gameId"
-              type="text"
-              value={firstKey?.game?.itch_id || undefined}
-              readOnly
-              hidden
-            />
-          </label>
-          <div className="cluster">
-            <button type="submit" formAction={updateKeyState}>
-              Update
-            </button>
-            <button type="submit" formAction={removeKey}>
-              Remove
-            </button>
-          </div>
-        </form>
-      )}
+      {playtester.game_key.length > 0
+        ? playtester.game_key.map(
+            (item: Tables<"game_key"> & { game: Tables<"game"> }) => {
+              return (
+                <form key={item.id} id={`editKey-${item.id}`}>
+                  <input
+                    name="playtesterId"
+                    type="text"
+                    value={playtesterId || undefined}
+                    readOnly
+                    hidden
+                  />
+                  <input
+                    name="playtesterName"
+                    type="text"
+                    value={playtester.name || undefined}
+                    readOnly
+                    hidden
+                  />
+                  <input
+                    name="playtesterEmail"
+                    type="text"
+                    value={playtester.email || undefined}
+                    readOnly
+                    hidden
+                  />
+                  <input
+                    name="keyId"
+                    type="text"
+                    value={item.id || undefined}
+                    readOnly
+                    hidden
+                  />
+                  <input
+                    name="gameId"
+                    type="text"
+                    value={item.game?.itch_id || undefined}
+                    readOnly
+                    hidden
+                  />
+                  <label>
+                    <span>
+                      Itch.io Key [{item.claimed ? "Claimed" : "Pending"}]
+                    </span>
+                    <input
+                      name="keyUrl"
+                      type="text"
+                      value={item?.url || undefined}
+                      readOnly
+                    />
+                  </label>
+                  <div className="cluster">
+                    <button type="submit" formAction={updateKeyState}>
+                      Update
+                    </button>
+                    <button type="submit" formAction={sendGameKeyEmail}>
+                      Send Email
+                    </button>
+                    <button type="submit" formAction={removeKey}>
+                      Remove
+                    </button>
+                  </div>
+                </form>
+              );
+            }
+          )
+        : null}
+
+      <AddKeyForm
+        playtesterId={Number(playtesterId)}
+        defaultKeys={gameKeysQuery.data}
+      />
 
       <form action={editPlaytester}>
         <input
