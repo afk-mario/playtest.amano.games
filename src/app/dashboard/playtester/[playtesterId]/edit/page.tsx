@@ -20,6 +20,7 @@ import "./styles.css";
 import PlaytesterAddFeedbackForm from "./add-feedback-form";
 import { PlaytesterFeedbackItem } from "components/playtester/playtester-feedback-item";
 import { Tables } from "types/supabase";
+import Time from "components/time";
 
 export default async function Page(props: {
   params: Promise<{ playtesterId: string }>;
@@ -168,8 +169,14 @@ export default async function Page(props: {
                   />
                   <label>
                     <span>
-                      Itch.io Key [{item.claimed ? "Claimed" : "Pending"}]
+                      Itch.io Key [{item.claimed ? "Claimed" : "Pending"}] for
+                      game {item.game.slug}
                     </span>
+                    {item.key_sent != null ? (
+                      <span>
+                        Email sent on: <Time>{item.key_sent}</Time>
+                      </span>
+                    ) : null}
                     <input
                       name="keyUrl"
                       type="text"

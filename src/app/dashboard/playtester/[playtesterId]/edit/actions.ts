@@ -123,9 +123,8 @@ export async function updateKeyState(formData: FormData) {
 export async function sendGameKeyEmail(formData: FormData) {
   console.log("Sending email");
   const supabase = await createClient();
-  const { keyUrl, playtesterId, playtesterName, playtesterEmail } = {
+  const { keyUrl, playtesterName, playtesterEmail } = {
     keyUrl: formData.get("keyUrl") as string,
-    playtesterId: Number(formData.get("playtesterId")),
     playtesterName: formData.get("playtesterName") as string,
     playtesterEmail: formData.get("playtesterEmail") as string,
   };
@@ -139,9 +138,9 @@ export async function sendGameKeyEmail(formData: FormData) {
       .replace("Z", "+00");
     console.log("email sent succesfully");
     await supabase
-      .from("playtester")
+      .from("game_key")
       .update({ key_sent: timestamp })
-      .eq("id", playtesterId);
+      .eq("url", keyUrl);
     revalidatePath("/dashboard/", "page");
     console.log("user updated");
   } catch (e) {

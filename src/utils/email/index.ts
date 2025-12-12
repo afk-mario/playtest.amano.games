@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport(transporterConfig);
 export async function sendEmail(name: string, email: string, url: string) {
   const text = `Hi ${name}! We’re reaching out because you gave us great feedback during our last “Devils on the Moon” Playtest. We really appreciate it, Thank You!
 
-If you’re still interested in trying out our most recent build and giving us some feedback on it again, here is a link to a new itch.io (${url}) key just for you. 
+If you’re still interested in trying out our most recent build and giving us some feedback on it again, here is a link to a new itch.io key just for you.
 
 * If it runs kinda slow on device it is because you probably have an older playdate which we have yet to optimize performance for. It’s still playable but in case you want to play a smoother version we’ve Included the web-player version of the game in your link.
 
@@ -32,7 +32,7 @@ Best!
 Key: ${url}`;
   const html = `<p>Hi ${name}! We’re reaching out because you gave us great feedback during our last “Devils on the Moon” Playtest. We really appreciate it, Thank You!</p>
 
-<p>If you’re still interested in trying out our most recent build and giving us some feedback on it again, here is a link to a new itch.io (<a href="${url}">${url}</a>) key just for you.</p>
+<p>If you’re still interested in trying out our most recent build and giving us some feedback on it again, here is a link to a new itch.io key just for you.</p>
 
 <p><i>If it runs kinda slow on device it is because you probably have an older playdate which we have yet to optimize performance for. It’s still playable but in case you want to play a smoother version we’ve Included the web-player version of the game in your link.</i></p>
 
@@ -41,19 +41,13 @@ Key: ${url}`;
 <p>Key: <a href="${url}">${url}</a></p>
 `;
 
-  if (1) {
-    const mailOptions = {
-      from: senderEmail,
-      to: email,
-      subject,
-      text,
-      html,
-    };
+  const mailOptions = {
+    from: senderEmail,
+    to: email,
+    subject,
+    text,
+    html,
+  };
 
-    return transporter.sendMail(mailOptions);
-  } else {
-    console.log(`Sending fake email`);
-    console.log(text);
-    throw new Error("Fake email");
-  }
+  return transporter.sendMail(mailOptions);
 }
