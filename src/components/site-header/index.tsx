@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { createClient } from "utils/supabase/server";
 import { logout } from "./actions";
-import { LuLogIn, LuLogOut } from "react-icons/lu";
+import { LogIn, LogOut } from "lucide-react";
 
 import Logo from "svg/logo.svg";
 
@@ -26,13 +26,13 @@ export default async function SiteHeader() {
               <Link href="/dashboard/playtester">Playtesters</Link>
               <form action={logout}>
                 <button>
-                  <LuLogOut /> Logout
+                  <LogOut /> Logout
                 </button>
               </form>
             </>
           ) : (
             <Link className="c-button" href="/login">
-              <LuLogIn /> Log in
+              <LogIn /> Log in
             </Link>
           )}
         </nav>

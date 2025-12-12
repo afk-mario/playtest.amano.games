@@ -1,4 +1,3 @@
-import React from "react";
 import { Tables } from "types/supabase";
 import { Send } from "lucide-react";
 

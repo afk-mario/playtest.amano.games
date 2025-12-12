@@ -4677,10 +4677,10 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
-lucide-react@^0.441.0:
-  version "0.441.0"
-  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.441.0.tgz#afc0d76c5ffb5bdac7adf0c9626217a5451b1af1"
-  integrity sha512-0vfExYtvSDhkC2lqg0zYVW1Uu9GsI4knuV9GP9by5z0Xhc4Zi5RejTxfz9LsjRmCyWVzHCJvxGKZWcRyvQCWVg==
+lucide-react@^0.561.0:
+  version "0.561.0"
+  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.561.0.tgz#8eb440395cf01b27da9c65cb014eb2c71f77e656"
+  integrity sha512-Y59gMY38tl4/i0qewcqohPdEbieBy7SovpBL9IFebhc2mDd8x4PZSOsiFRkpPcOq6bj1r/mjH/Rk73gSlIJP2A==
 
 math-intrinsics@^1.1.0:
   version "1.1.0"
@@ -5360,11 +5360,6 @@ react-dropzone@^14.3.8:
     file-selector "^2.1.0"
     prop-types "^15.8.1"
 
-react-icons@^5.5.0:
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-5.5.0.tgz#8aa25d3543ff84231685d3331164c00299cdfaf2"
-  integrity sha512-MEFcXdkP3dLo8uumGI5xN3lDFNsRtrjbOEKDLD7yv76v4wpnEq2Lt2qeHaQOr34I/wPN3s3+N08WkQ+CW37Xiw==
-
 react-is@18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
@@ -5375,12 +5370,13 @@ react-is@^16.13.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-markdown@^9.0.1:
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/react-markdown/-/react-markdown-9.0.1.tgz#c05ddbff67fd3b3f839f8c648e6fb35d022397d1"
-  integrity sha512-186Gw/vF1uRkydbsOIkcGXw7aHq0sZOCRFFjGrr7b9+nVZg4UfA4enXCaxm4fUzecU38sWfrNDitGhshuU7rdg==
+react-markdown@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/react-markdown/-/react-markdown-10.1.0.tgz#e22bc20faddbc07605c15284255653c0f3bad5ca"
+  integrity sha512-qKxVopLT/TyA6BX3Ue5NwabOsAzm0Q7kAPwq6L+wWDwisYs7R8vZ0nRXqq6rkueboxpkjvLGU9fWifiX/ZZFxQ==
   dependencies:
     "@types/hast" "^3.0.0"
+    "@types/mdast" "^4.0.0"
     devlop "^1.0.0"
     hast-util-to-jsx-runtime "^2.0.0"
     html-url-attributes "^3.0.0"
