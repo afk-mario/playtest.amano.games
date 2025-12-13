@@ -50,7 +50,7 @@ export function PlaytesterSendEmailForm({
         readOnly
         hidden
       />
-      <button type="submit">
+      <button className="c-button" type="submit">
         <Send color="currentColor" />
       </button>
     </form>

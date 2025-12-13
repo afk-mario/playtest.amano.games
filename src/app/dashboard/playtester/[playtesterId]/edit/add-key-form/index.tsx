@@ -1,6 +1,6 @@
 "use client";
 
-import { CircleX } from "lucide-react";
+import { CircleX, CirclePlus } from "lucide-react";
 import React from "react";
 import { useCombobox } from "downshift";
 import * as Popover from "@radix-ui/react-popover";
@@ -100,7 +100,7 @@ export default function AddKeyForm({
               <ul
                 className="c-add-key-list"
                 data-open={isOpen && items.length}
-                {...getMenuProps()}
+                {...getMenuProps({}, { suppressRefError: true })}
               >
                 {items.map((item, index) => (
                   <li
@@ -123,7 +123,9 @@ export default function AddKeyForm({
         </Popover.Portal>
       </Popover.Root>
 
-      <button type="submit">Add</button>
+      <button className="c-button" type="submit">
+        <CirclePlus /> Add
+      </button>
     </form>
   );
 }

@@ -55,16 +55,22 @@ export default function PlaytesterDiscordForm({
 
       <div className="cluster">
         {discordProfile != null ? (
-          <button type="submit" formAction={scrapeDiscordAvatar}>
+          <button
+            className="c-button"
+            type="submit"
+            formAction={scrapeDiscordAvatar}
+          >
             Get avatar
           </button>
         ) : null}
         {discordProfile != null ? (
-          <button type="submit" formAction={updateDiscord}>
+          <button className="c-button" type="submit" formAction={updateDiscord}>
             Update
           </button>
         ) : null}
-        <button type="submit">Save</button>
+        <button className="c-button" type="submit">
+          Save
+        </button>
       </div>
     </form>
   );

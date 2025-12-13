@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { createClient } from "utils/supabase/server";
 import { logout } from "./actions";
-import { LogIn, LogOut } from "lucide-react";
+import { LogIn, LogOut, Users, SquareChartGantt } from "lucide-react";
 
 import Logo from "svg/logo.svg";
 
@@ -15,17 +15,23 @@ export default async function SiteHeader() {
 
   return (
     <header className="c-site-header">
-      <div className="wrapper | cluster">
+      <div className="cluster">
         <Link href="/" className="c-site-title">
           <Logo />
         </Link>
         <nav className="c-site-nav">
           {isLoggedIn ? (
             <>
-              <Link href="/dashboard">Timeline</Link>
-              <Link href="/dashboard/playtester">Playtesters</Link>
+              <Link className="c-button" href="/dashboard">
+                <SquareChartGantt />
+                Timeline
+              </Link>
+              <Link className="c-button" href="/dashboard/playtester">
+                <Users />
+                Playtesters
+              </Link>
               <form action={logout}>
-                <button>
+                <button className="c-button">
                   <LogOut /> Logout
                 </button>
               </form>

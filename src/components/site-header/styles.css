@@ -1,10 +1,17 @@
 .c-site-header {
   background: var(--color-hl);
   color: var(--color-bg);
+  padding: var(--spacing-02) var(--spacing-04);
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
 }
 
-.c-site-header .wrapper {
-  padding: var(--spacing-02) var(--spacing-04);
+.c-site-header .cluster {
+  max-width: var(--column-width-01);
+  width: 100%;
+  justify-content: space-between;
 }
 
 .c-site-title {
@@ -35,6 +42,7 @@
   padding: 0;
 }
 
+.c-site-header .c-button,
 .c-site-header button {
   border-color: var(--color-bg-alt);
 }

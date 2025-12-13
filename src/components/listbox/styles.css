@@ -1,0 +1,95 @@
+.c-listbox-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-04);
+  color: var(--color-fg);
+  padding: var(--spacing-q) var(--spacing-01);
+  border: var(--border);
+  border-color: var(--color-border);
+  border-radius: var(--border-radius-s);
+  background-color: var(--color-bg);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  overflow: hidden;
+}
+
+.c-listbox-trigger[data-placeholder] {
+  color: var(--color-fg-alt);
+}
+
+.c-listbox-trigger > span:first-of-type {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.c-listbox-trigger:hover {
+  border-color: var(--color-fg);
+  background-color: var(--color-bg-alt);
+}
+
+.c-listbox-trigger-indicator {
+  width: var(--size-400);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.c-listbox-content {
+  background-color: var(--color-bg-alt);
+  border: var(--border);
+  border-color: var(--color-fg);
+  border-radius: var(--border-radius-s);
+  padding: var(--spacing-q) var(--spacing-01);
+}
+
+.c-listbox-item {
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  /* gap: var(--spacing-h); */
+  color: var(--color-neutral-fg);
+  padding: var(--spacing-q) 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.c-listbox-item:not(:first-child) {
+  border-top: var(--border);
+  border-color: var(--color-neutral-fg);
+}
+
+.c-listbox-item:hover,
+.c-listbox-item:focus {
+  outline: none;
+  color: var(--color-hl);
+}
+
+.c-listbox-item[data-disabled] {
+  color: var(--color-fg-alt);
+}
+
+.c-listbox-item[data-current-nav] {
+  background-color: var(--color-bg);
+}
+
+.c-listbox-item-indicator {
+  padding: 0;
+}
+
+.c-listbox-item-indicator svg {
+  width: var(--size-400);
+}
+
+.c-listbox-scroll-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--size-400);
+  background-color: var(--color-bg-alt);
+  color: var(--color-fg);
+  cursor: default;
+}

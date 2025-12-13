@@ -1,8 +1,11 @@
 .p-feedback-list {
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: var(--column-width-01);
+  margin: auto;
 }
 
 .p-feedback-list .c-feedback-item {
   width: 100%;
-  max-width: 800px;
 }

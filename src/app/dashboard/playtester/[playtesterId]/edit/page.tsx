@@ -3,14 +3,9 @@
 import Link from "next/link";
 import { createClient } from "utils/supabase/server";
 
-import {
-  editPlaytester,
-  removeKey,
-  sendGameKeyEmail,
-  updateKeyState,
-} from "./actions";
+import { editPlaytester } from "./actions";
 import AddKeyForm from "./add-key-form";
-import { ChevronLeft, ChevronRight, ChevronsLeft } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronsLeft, Save } from "lucide-react";
 import ChangeAvatarForm from "./avatar-form";
 
 import PlaytesterInfo from "../playtester-info";
@@ -20,7 +15,7 @@ import "./styles.css";
 import PlaytesterAddFeedbackForm from "./add-feedback-form";
 import { PlaytesterFeedbackItem } from "components/playtester/playtester-feedback-item";
 import { Tables } from "types/supabase";
-import Time from "components/time";
+import KeyEditForm from "./key-edit-form";
 
 export default async function Page(props: {
   params: Promise<{ playtesterId: string }>;
@@ -30,7 +25,9 @@ export default async function Page(props: {
   const supabase = await createClient();
   const playtesterQuery = await supabase
     .from("playtester")
-    .select(`*, game_key(*, game:game(*)), social_profile(*), feedback(*)`)
+    .select(
+      `*, game_key(*, game:game(*)), social_profile(*), feedback(*, game(*))`
+    )
     .eq("id", playtesterId)
     .single();
 
@@ -57,6 +54,17 @@ export default async function Page(props: {
     );
   }
 
+  const gamesQuery = await supabase.from("game").select("*");
+
+  if (gamesQuery.error) {
+    return (
+      <div>
+        <h2>Error Playtesters</h2>
+        <pre>{JSON.stringify(gamesQuery.error, null, 2)}</pre>
+      </div>
+    );
+  }
+
   const gameKeysQuery = await supabase
     .from("game_key")
     .select(`*`)
@@ -71,6 +79,7 @@ export default async function Page(props: {
     );
   }
 
+  const games = gamesQuery.data;
   const playtester = playtesterQuery.data;
   const currentIndex = playtestersQuery.data.findIndex(
     (item) => item.id === Number(playtesterId)
@@ -131,71 +140,11 @@ export default async function Page(props: {
         ? playtester.game_key.map(
             (item: Tables<"game_key"> & { game: Tables<"game"> }) => {
               return (
-                <form key={item.id} id={`editKey-${item.id}`}>
-                  <input
-                    name="playtesterId"
-                    type="text"
-                    value={playtesterId || undefined}
-                    readOnly
-                    hidden
-                  />
-                  <input
-                    name="playtesterName"
-                    type="text"
-                    value={playtester.name || undefined}
-                    readOnly
-                    hidden
-                  />
-                  <input
-                    name="playtesterEmail"
-                    type="text"
-                    value={playtester.email || undefined}
-                    readOnly
-                    hidden
-                  />
-                  <input
-                    name="keyId"
-                    type="text"
-                    value={item.id || undefined}
-                    readOnly
-                    hidden
-                  />
-                  <input
-                    name="gameId"
-                    type="text"
-                    value={item.game?.itch_id || undefined}
-                    readOnly
-                    hidden
-                  />
-                  <label>
-                    <span>
-                      Itch.io Key [{item.claimed ? "Claimed" : "Pending"}] for
-                      game {item.game.slug}
-                    </span>
-                    {item.key_sent != null ? (
-                      <span>
-                        Email sent on: <Time>{item.key_sent}</Time>
-                      </span>
-                    ) : null}
-                    <input
-                      name="keyUrl"
-                      type="text"
-                      value={item?.url || undefined}
-                      readOnly
-                    />
-                  </label>
-                  <div className="cluster">
-                    <button type="submit" formAction={updateKeyState}>
-                      Update
-                    </button>
-                    <button type="submit" formAction={sendGameKeyEmail}>
-                      Send Email
-                    </button>
-                    <button type="submit" formAction={removeKey}>
-                      Remove
-                    </button>
-                  </div>
-                </form>
+                <KeyEditForm
+                  key={item.id}
+                  gameKey={item}
+                  playtester={playtester}
+                />
               );
             }
           )
@@ -222,10 +171,12 @@ export default async function Page(props: {
             rows={10}
           />
         </label>
-        <button type="submit">Save</button>
+        <button className="c-button" type="submit">
+          <Save /> Save
+        </button>
       </form>
       <PlaytesterDiscordForm playtester={playtester} />
-      <PlaytesterAddFeedbackForm playtester={playtester} />
+      <PlaytesterAddFeedbackForm playtester={playtester} games={games} />
       <div className="stack">
         {playtester.feedback.map((item) => {
           return (
@@ -233,6 +184,7 @@ export default async function Page(props: {
               key={item.id}
               feedback={item}
               playtester={playtester}
+              game={item.game}
             />
           );
         })}

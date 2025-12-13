@@ -1,0 +1,62 @@
+.c-checkbox {
+  position: relative;
+  display: inline-flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-01);
+  cursor: pointer;
+  padding: 0;
+  color: var(--color-fg);
+  background-color: transparent;
+  border: none;
+}
+
+.c-checkbox[data-disabled=""] {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+.c-checkbox[data-state="checked"] {
+  color: var(--color-hl);
+}
+
+.c-checkbox-label {
+  cursor: pointer;
+}
+
+.c-checkbox[data-disabled=""] .c-checkbox-label {
+  cursor: not-allowed;
+}
+
+.c-checkbox-indicator {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-500);
+  height: var(--size-500);
+  border: var(--border);
+  border-radius: var(--border-radius-s);
+  background-color: var(--color-bg);
+  color: var(--color-border);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.c-checkbox:hover .c-checkbox-indicator[data-state="unchecked"] {
+  border-color: var(--color-fg);
+}
+
+.c-checkbox-indicator[data-state="checked"] {
+  border-color: var(--color-fg);
+  color: white;
+}
+
+.c-checkbox-indicator[data-state="unchecked"] .c-checkbox-indicator-icon {
+  display: none;
+}
+
+.c-checkbox-indicator svg {
+  width: calc(100% - var(--spacing-q));
+  height: calc(100% - var(--spacing-q));
+}

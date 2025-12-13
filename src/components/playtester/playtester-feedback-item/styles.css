@@ -1,5 +1,5 @@
 .c-feedback-item {
-  --avatar-size: 100px;
+  --avatar-size: 50px;
 
   display: flex;
   flex-flow: row nowrap;
@@ -15,10 +15,24 @@
 }
 
 .c-feedback-item header {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.c-feedback-item header a {
+  text-decoration: none;
+}
+
+.c-feedback-item header a:hover {
+  text-decoration: underline;
 }
 
 .c-feedback-item .c-feedback-item-content {
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-01);
 }
+
 .c-feedback-item-text {
   width: 100%;
 }

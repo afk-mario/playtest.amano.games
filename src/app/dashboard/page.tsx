@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 
 import "./styles.css";
 
-import InfoPanel from "./info-panel";
 import { createClient } from "utils/supabase/server";
 import { PlaytesterFeedbackItem } from "components/playtester/playtester-feedback-item";
 
@@ -16,19 +15,19 @@ export default async function Dashboard() {
 
   const { data: feedbacks } = await supabase
     .from("feedback")
-    .select("*,playtester(*,social_profile(*))")
+    .select("*,game(*),playtester(*,social_profile(*))")
     .order("id", { ascending: false });
 
   return (
     <div className="stack">
-      <InfoPanel />
       <div className="p-feedback-list stack">
         {feedbacks?.map((item, i) => {
           return (
             <PlaytesterFeedbackItem
               key={i}
+              game={item.game}
               feedback={item}
-              playtester={item?.playtester}
+              playtester={item.playtester}
             />
           );
         })}

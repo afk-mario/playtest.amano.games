@@ -2,6 +2,7 @@
   display: block;
   width: 100%;
   max-width: 100%;
+  overflow: auto hidden;
 }
 
 .c-table-container table {
@@ -12,7 +13,7 @@
 .c-table-container tbody::before {
   content: "@";
   display: block;
-  line-height: var(--spacing-01);
+  line-height: var(--spacing-02);
   text-indent: -99999px;
 }
 

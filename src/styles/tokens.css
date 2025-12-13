@@ -4,14 +4,16 @@
   --black: #110b0d;
   --gray: #717171;
 
-  --color-bg: var(--black);
-  --color-bg-alt: black;
+  --color-bg: #000000;
+  --color-bg-alt: var(--black);
   --color-fg: var(--white);
-  --color-border: var(--color-fg);
+  --color-fg-alt: var(--gray);
+  --color-border: var(--color-fg-alt);
   --color-hl: var(--yellow);
 
   --border: 2px solid var(--color-border);
-  --border-radius: 8px;
+  --border-radius: 16px;
+  --border-radius-s: 4px;
 
   --spacing-01: 8px;
   --spacing-q: calc(var(--spacing-01) * 0.25);
@@ -25,6 +27,21 @@
   --spacing-08: calc(var(--spacing-01) * 8);
   --spacing-09: calc(var(--spacing-01) * 9);
   --spacing-10: calc(var(--spacing-01) * 10);
+
+  --size-base: 1rem;
+  --size-100: calc(var(--size-base) * 0.25);
+  --size-200: calc(var(--size-base) * 0.5);
+  --size-300: calc(var(--size-base) * 0.8);
+  --size-400: var(--size-base);
+  --size-500: calc(var(--size-base) * 1.25);
+  --size-600: calc(var(--size-base) * 1.6);
+  --size-700: calc(var(--size-base) * 2);
+  --size-800: calc(var(--size-base) * 3);
+  --size-900: calc(var(--size-base) * 4);
+  --size-1000: calc(var(--size-base) * 5);
+
+  --column-width-01: 40em;
+  --column-width-02: 60em;
 
   --font-sans: sans-serif;
   --font-mono: "Space Mono", mono;

@@ -10,8 +10,10 @@ import "./styles.css";
 export function PlaytesterFeedbackItem({
   playtester,
   feedback,
+  game,
 }: {
   feedback: Tables<"feedback">;
+  game?: Tables<"game">;
   playtester: {
     social_profile: Tables<"social_profile">[];
   } & Tables<"playtester">;
@@ -22,7 +24,7 @@ export function PlaytesterFeedbackItem({
         <PlaytesterWidget playtester={playtester} />
       </div>
       <div className="c-feedback-item-content">
-        <header>
+        <header className="cluster">
           <Link href={`/dashboard/playtester/${playtester.id}/edit/`}>
             <h3>
               {playtester.name} @ {feedback.platform}
@@ -30,10 +32,12 @@ export function PlaytesterFeedbackItem({
           </Link>
           <Time formatStr="PP hh:mm:ss">{feedback.timestamp}</Time>
         </header>
-        <hr />
         <div className="c-feedback-item-text | stack">
           <Markdown>{feedback.text}</Markdown>
         </div>
+        <footer>
+          {game ? <span className="c-tag">{game.name}</span> : null}
+        </footer>
       </div>
     </article>
   );

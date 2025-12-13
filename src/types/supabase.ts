@@ -17,6 +17,7 @@ export type Database = {
       feedback: {
         Row: {
           created_at: string
+          game: number | null
           id: number
           platform: string | null
           playtester: number
@@ -27,6 +28,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          game?: number | null
           id?: number
           platform?: string | null
           playtester: number
@@ -37,6 +39,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          game?: number | null
           id?: number
           platform?: string | null
           playtester?: number
@@ -46,6 +49,13 @@ export type Database = {
           url?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "feedback_game_fkey"
+            columns: ["game"]
+            isOneToOne: false
+            referencedRelation: "game"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "feedback_playtester_fkey"
             columns: ["playtester"]
@@ -60,18 +70,21 @@ export type Database = {
           created_at: string
           id: number
           itch_id: string | null
+          name: string | null
           slug: string | null
         }
         Insert: {
           created_at?: string
           id?: number
           itch_id?: string | null
+          name?: string | null
           slug?: string | null
         }
         Update: {
           created_at?: string
           id?: number
           itch_id?: string | null
+          name?: string | null
           slug?: string | null
         }
         Relationships: []

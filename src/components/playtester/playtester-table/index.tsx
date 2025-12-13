@@ -1,6 +1,6 @@
 "use client";
 
-import React, { HTMLProps } from "react";
+import React from "react";
 import Link from "next/link";
 import { Circle, CircleCheck } from "lucide-react";
 import {
@@ -26,56 +26,8 @@ type PlaytesterWithGameKeys = {
   feedback: Tables<"feedback">[];
 } & Tables<"playtester">;
 
-function IndeterminateCheckbox({
-  indeterminate,
-  className = "",
-  ...rest
-}: { indeterminate?: boolean } & HTMLProps<HTMLInputElement>) {
-  const ref = React.useRef<HTMLInputElement>(null!);
-
-  React.useEffect(() => {
-    if (typeof indeterminate === "boolean") {
-      ref.current.indeterminate = !rest.checked && indeterminate;
-    }
-  }, [ref, indeterminate, rest.checked]);
-
-  return (
-    <input
-      type="checkbox"
-      ref={ref}
-      className={className + " cursor-pointer"}
-      {...rest}
-    />
-  );
-}
-
 const columnHelper = createColumnHelper<PlaytesterWithGameKeys>();
 const columns = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <IndeterminateCheckbox
-        {...{
-          checked: table.getIsAllRowsSelected(),
-          indeterminate: table.getIsSomeRowsSelected(),
-          onChange: table.getToggleAllRowsSelectedHandler(),
-        }}
-      />
-    ),
-    cell: ({ row }) => (
-      <div>
-        <IndeterminateCheckbox
-          {...{
-            checked: row.getIsSelected(),
-            disabled: !row.getCanSelect(),
-            indeterminate: row.getIsSomeSelected(),
-            onChange: row.getToggleSelectedHandler(),
-          }}
-        />
-      </div>
-    ),
-  },
-
   columnHelper.accessor("id", {
     header: "№",
     cell: (info) => (
@@ -259,16 +211,13 @@ export default function PlaytesterTable({
     },
   });
 
-  const selectedCount = table.getSelectedRowModel().flatRows.length;
+  // const selectedCount = table.getSelectedRowModel().flatRows.length;
   // const selectedPlaytesters = table
   //   .getSelectedRowModel()
   //   .rows.map((row) => row.original);
 
   return (
     <div className="c-playtester-table c-table-container | stack">
-      <div className="c-playtester-table-actions | cluster">
-        <span>{selectedCount} selected</span>
-      </div>
       <table>
         <thead className="c-table-header">
           {table.getHeaderGroups().map((headerGroup) => (

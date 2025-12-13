@@ -1,0 +1,8 @@
+.c-key-edit-form {
+}
+
+.c-key-edit-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
