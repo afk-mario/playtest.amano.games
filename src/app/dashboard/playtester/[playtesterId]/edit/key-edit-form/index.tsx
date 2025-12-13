@@ -54,10 +54,8 @@ export default function KeyEditForm({
         hidden
       />
       <label>
-        <span>
-          Itch.io Key [{gameKey.claimed ? "Claimed" : "Pending"}] for game{" "}
-          {gameKey.game.slug}
-        </span>
+        <span>Itch.io [{gameKey.claimed ? "Claimed" : "Pending"}]</span>
+        <span>game: {gameKey.game.name}</span>
         {gameKey.key_sent != null ? (
           <span>
             Email sent on: <Time>{gameKey.key_sent}</Time>

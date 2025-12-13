@@ -113,21 +113,6 @@ export default async function Page(props: {
           </Link>
         ) : null}
       </header>
-      <details>
-        <summary>Show data</summary>
-        <pre
-          style={{
-            padding: "var(--spacing-02)",
-            border: "var(--border)",
-            borderRadius: "var(--border-radius)",
-            background: "var(--color-bg-alt)",
-            width: "100%",
-            overflow: "auto",
-          }}
-        >
-          {JSON.stringify(playtester, null, 2)}
-        </pre>
-      </details>
       <div className="p-playtester-edit-info-container ">
         <ChangeAvatarForm
           playtesterId={playtesterId}
@@ -189,6 +174,21 @@ export default async function Page(props: {
           );
         })}
       </div>
+      <details>
+        <summary>Show data</summary>
+        <pre
+          style={{
+            padding: "var(--spacing-02)",
+            border: "var(--border)",
+            borderRadius: "var(--border-radius)",
+            background: "var(--color-bg-alt)",
+            width: "100%",
+            overflow: "auto",
+          }}
+        >
+          {JSON.stringify(playtester, null, 2)}
+        </pre>
+      </details>
     </div>
   );
 }

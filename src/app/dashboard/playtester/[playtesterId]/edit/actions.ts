@@ -216,10 +216,11 @@ export async function scrapeDiscordAvatar(formData: FormData) {
 
 export async function addFeedback(formData: FormData) {
   const supabase = await createClient();
-  const { playtesterId, feedbackPlatform, feedbackText } = {
+  const { gameId, playtesterId, feedbackPlatform, feedbackText } = {
     playtesterId: Number(formData.get("playtesterId")),
     feedbackPlatform: formData.get("feedbackPlatform") as string,
     feedbackText: formData.get("feedbackText") as string,
+    gameId: Number(formData.get("gameId")),
   };
   await supabase
     .from("feedback")
@@ -227,6 +228,7 @@ export async function addFeedback(formData: FormData) {
       playtester: playtesterId,
       platform: feedbackPlatform,
       text: feedbackText,
+      gameId: gameId,
     })
     .eq("id", playtesterId);
   revalidatePath("/dashboard/playtester/[playtesterId]", "page");

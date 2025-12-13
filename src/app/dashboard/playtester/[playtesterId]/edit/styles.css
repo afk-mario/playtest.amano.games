@@ -1,5 +1,5 @@
 .p-playtester-edit {
-  max-width: 800px;
+  max-width: var(--column-width-01);
   margin: auto;
 }
 

@@ -35,7 +35,12 @@ export default function PlaytesterAddFeedbackForm({
         </label>
         <label>
           <span>Game</span>
-          <Listbox placeholder="Choose a game" options={gameOptions} />
+          <Listbox
+            required
+            name="gameId"
+            placeholder="Choose a game"
+            options={gameOptions}
+          />
         </label>
       </div>
       <label>

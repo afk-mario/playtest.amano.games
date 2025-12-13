@@ -1,6 +1,9 @@
 import { Tables } from "types/supabase";
 
+import { RefreshCcw, ImageUp, Save } from "lucide-react";
 import { saveDiscord, scrapeDiscordAvatar, updateDiscord } from "../actions";
+
+import "./styles.css";
 
 export default function PlaytesterDiscordForm({
   playtester,
@@ -53,22 +56,23 @@ export default function PlaytesterDiscordForm({
         />
       </label>
 
-      <div className="cluster">
+      <div className="c-discord-form-actions cluster">
         {discordProfile != null ? (
           <button
             className="c-button"
             type="submit"
             formAction={scrapeDiscordAvatar}
           >
-            Get avatar
+            <ImageUp />
           </button>
         ) : null}
         {discordProfile != null ? (
           <button className="c-button" type="submit" formAction={updateDiscord}>
-            Update
+            <RefreshCcw />
           </button>
         ) : null}
         <button className="c-button" type="submit">
+          <Save />
           Save
         </button>
       </div>
