@@ -1,21 +1,69 @@
 .c-playtester-info {
-  padding: var(--spacing-02);
   padding-top: 40px;
   background: var(--color-bg-alt);
   border: var(--border);
   border-radius: var(--border-radius);
   display: flex;
   flex-flow: column;
-  gap: var(--spacing-01);
+}
+
+.c-playtester-info > *:not(:last-child) {
+  border-bottom: var(--border);
 }
 
 .c-playtester-info-header {
   display: flex;
   flex-flow: column;
+  gap: var(--spacing-02);
+  padding: var(--spacing-02);
+}
+
+.c-playtester-info-title {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  justify-content: space-between;
   gap: var(--spacing-q);
 }
 
 .c-playtester-info-social-list {
   list-style: none;
   padding: 0;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.c-playtester-info-social-list li {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-q);
+  padding: var(--spacing-01) var(--spacing-02);
+  white-space: nowrap;
+}
+
+.c-playtester-info-social-list li:not(:last-child) {
+  border-right: var(--border);
+}
+
+.c-playtester-info-social-list li a {
+  text-decoration: none;
+}
+
+.c-playtester-info-social-list li a:hover {
+  text-decoration: underline;
+}
+
+.c-playterster-info-social-platform {
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+.c-playtester-info-description {
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-01);
+  padding: var(--spacing-01) var(--spacing-02);
 }

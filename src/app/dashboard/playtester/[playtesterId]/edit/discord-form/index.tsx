@@ -45,36 +45,42 @@ export default function PlaytesterDiscordForm({
           />
         </label>
       ) : null}
-      <label>
-        <span>User id</span>
-        <input
-          aria-autocomplete="none"
-          autoComplete="off"
-          name="discordSocialId"
-          defaultValue={discordProfile?.social_id || undefined}
-          required
-        />
-      </label>
+      <div className="c-discord-fields cluster">
+        <label>
+          <span>User id</span>
+          <input
+            aria-autocomplete="none"
+            autoComplete="off"
+            name="discordSocialId"
+            defaultValue={discordProfile?.social_id || undefined}
+            required
+          />
+        </label>
 
-      <div className="c-discord-form-actions cluster">
-        {discordProfile != null ? (
-          <button
-            className="c-button"
-            type="submit"
-            formAction={scrapeDiscordAvatar}
-          >
-            <ImageUp />
+        <div className="c-discord-form-actions cluster">
+          {discordProfile != null ? (
+            <button
+              className="c-button"
+              type="submit"
+              formAction={scrapeDiscordAvatar}
+            >
+              <ImageUp />
+            </button>
+          ) : null}
+          {discordProfile != null ? (
+            <button
+              className="c-button"
+              type="submit"
+              formAction={updateDiscord}
+            >
+              <RefreshCcw />
+            </button>
+          ) : null}
+          <button className="c-button" type="submit">
+            <Save />
+            Save
           </button>
-        ) : null}
-        {discordProfile != null ? (
-          <button className="c-button" type="submit" formAction={updateDiscord}>
-            <RefreshCcw />
-          </button>
-        ) : null}
-        <button className="c-button" type="submit">
-          <Save />
-          Save
-        </button>
+        </div>
       </div>
     </form>
   );

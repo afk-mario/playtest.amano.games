@@ -5,6 +5,16 @@
   overflow: auto hidden;
 }
 
+.c-table-container a {
+  text-decoration: none;
+  text-decoration-color: var(--color-hl);
+}
+
+.c-table-container a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--color-hl);
+}
+
 .c-table-container table {
   width: 100%;
   border-spacing: 0;

@@ -1,3 +1,12 @@
+.c-discord-fields {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
 .c-discord-form-actions {
   justify-content: flex-end;
+}
+
+.c-discord-fields label {
+  flex: 1;
 }

@@ -1,3 +1,16 @@
+.c-add-key-form {
+  display: flex;
+  flex-flow: row;
+  gap: var(--spacing-01);
+}
+
+.c-key-field {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-01);
+}
+
 .c-add-key-popover-content {
   width: var(--radix-popover-trigger-width);
   border: var(--border);

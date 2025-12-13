@@ -2,7 +2,7 @@ form {
   display: flex;
   flex-flow: column;
   background-color: var(--color-bg-alt);
-  padding: var(--spacing-01) var(--spacing-02);
+  padding: var(--spacing-02) var(--spacing-02);
   gap: var(--spacing-01);
   border: var(--border);
   border-radius: var(--border-radius);
@@ -65,5 +65,5 @@ textarea {
 label {
   display: flex;
   flex-flow: column;
-  gap: var(--spacing-q);
+  gap: var(--spacing-01);
 }

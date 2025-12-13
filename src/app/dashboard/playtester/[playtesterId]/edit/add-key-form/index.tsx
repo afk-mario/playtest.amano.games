@@ -61,6 +61,7 @@ export default function AddKeyForm({
         readOnly
         hidden
       />
+
       <input
         type="text"
         name="keyId"
@@ -69,59 +70,61 @@ export default function AddKeyForm({
         hidden
       />
 
-      <Popover.Root open={isOpen}>
-        <label className="" {...getLabelProps()}>
-          Itch.io Key
-        </label>
-        <Popover.Anchor asChild>
-          <input placeholder="Itch key" className="" {...getInputProps()} />
-        </Popover.Anchor>
-        <Popover.Portal>
-          <Popover.Content
-            className="c-add-key-popover-content"
-            sideOffset={5}
-            onOpenAutoFocus={(event) => {
-              event.preventDefault();
-            }}
-          >
-            <div>
-              <header className="c-add-key-popover-header | cluster">
-                <span>
-                  {items.length}/{defaultKeys.length}
-                </span>
-                <Popover.Close
-                  className="c-add-key-popover-close"
-                  aria-label="Close"
-                  {...getToggleButtonProps()}
-                >
-                  <CircleX />
-                </Popover.Close>
-              </header>
-              <ul
-                className="c-add-key-list"
-                data-open={isOpen && items.length}
-                {...getMenuProps({}, { suppressRefError: true })}
-              >
-                {items.map((item, index) => (
-                  <li
-                    className="c-add-key-row"
-                    data-hl={highlightedIndex == index}
-                    data-selected={selectedItem == item}
-                    key={item.id}
-                    {...getItemProps({ item, index })}
+      <div className="c-key-field">
+        <Popover.Root open={isOpen}>
+          <label className="" {...getLabelProps()}>
+            Itch.io Key
+          </label>
+          <Popover.Anchor asChild>
+            <input placeholder="Itch key" className="" {...getInputProps()} />
+          </Popover.Anchor>
+          <Popover.Portal>
+            <Popover.Content
+              className="c-add-key-popover-content"
+              sideOffset={5}
+              onOpenAutoFocus={(event) => {
+                event.preventDefault();
+              }}
+            >
+              <div>
+                <header className="c-add-key-popover-header | cluster">
+                  <span>
+                    {items.length}/{defaultKeys.length}
+                  </span>
+                  <Popover.Close
+                    className="c-add-key-popover-close"
+                    aria-label="Close"
+                    {...getToggleButtonProps()}
                   >
-                    <span className="">{item.url?.slice(72)}</span>
-                  </li>
-                ))}
-              </ul>
-              {items.length == 0 ? (
-                <span className="c-add-key-empty">No items</span>
-              ) : null}
-            </div>
-            <Popover.Arrow className="c-add-key-popover-arrow" />
-          </Popover.Content>
-        </Popover.Portal>
-      </Popover.Root>
+                    <CircleX />
+                  </Popover.Close>
+                </header>
+                <ul
+                  className="c-add-key-list"
+                  data-open={isOpen && items.length}
+                  {...getMenuProps({}, { suppressRefError: true })}
+                >
+                  {items.map((item, index) => (
+                    <li
+                      className="c-add-key-row"
+                      data-hl={highlightedIndex == index}
+                      data-selected={selectedItem == item}
+                      key={item.id}
+                      {...getItemProps({ item, index })}
+                    >
+                      <span className="">{item.url?.slice(72)}</span>
+                    </li>
+                  ))}
+                </ul>
+                {items.length == 0 ? (
+                  <span className="c-add-key-empty">No items</span>
+                ) : null}
+              </div>
+              <Popover.Arrow className="c-add-key-popover-arrow" />
+            </Popover.Content>
+          </Popover.Portal>
+        </Popover.Root>
+      </div>
 
       <button className="c-button" type="submit">
         <CirclePlus /> Add

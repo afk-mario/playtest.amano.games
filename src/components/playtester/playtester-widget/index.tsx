@@ -7,6 +7,7 @@ import * as HoverCard from "@radix-ui/react-hover-card";
 import "./styles.css";
 import { getGravatarUrl } from "utils/social/gravatar";
 import { getSocialURL } from "utils/social";
+import Markdown from "react-markdown";
 
 export default function PlaytesterWidget({
   playtester,
@@ -18,7 +19,7 @@ export default function PlaytesterWidget({
   const gravatar = getGravatarUrl(playtester.email || undefined);
   return (
     <div className="c-playterster-widget">
-      <HoverCard.Root openDelay={300} closeDelay={400}>
+      <HoverCard.Root openDelay={300} closeDelay={10000}>
         <HoverCard.Trigger asChild>
           <Link href={`/dashboard/playtester/${playtester.id}/edit/`}>
             <Avatar.Root className="c-playtester-widget-trigger c-avatar">
@@ -39,31 +40,46 @@ export default function PlaytesterWidget({
             sideOffset={5}
           >
             <HoverCard.Arrow className="c-playterster-widget-arrow" />
-            {playtester.social_profile.length > 0 ? (
-              <ul className="c-playterster-widget-social-list | cluster">
-                {playtester.social_profile.map((item) => {
-                  const url = getSocialURL(item);
-                  return (
-                    <li key={item.id}>
-                      {url ? (
-                        <a href={url} target="_blank" rel="noopener noreferrer">
-                          {item.display_name}
-                        </a>
-                      ) : (
-                        <span>{item.display_name}</span>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : null}
-            {playtester.notes ? (
-              <>
-                <p>{playtester.notes}</p>
-                <hr />
-              </>
-            ) : null}
-            <p>{playtester.description}</p>
+
+            <div className="c-playterster-widget-info">
+              {playtester.social_profile.length > 0 ? (
+                <ul className="c-playterster-widget-social-list">
+                  {playtester.social_profile.map((item) => {
+                    const url = getSocialURL(item);
+                    return (
+                      <li
+                        className="c-playterster-widget-social-item"
+                        key={item.id}
+                      >
+                        <span className="c-playterster-widget-social-platform">
+                          {item.platform}
+                        </span>
+                        {url ? (
+                          <a
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {item.display_name}
+                          </a>
+                        ) : (
+                          <span>{item.display_name}</span>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : null}
+              {playtester.notes ? (
+                <div className="c-playterster-widget-notes">
+                  <Markdown>{`**Notes:**\n${playtester.notes}`}</Markdown>
+                </div>
+              ) : null}
+            </div>
+
+            <div className="c-playterster-widget-description">
+              <Markdown>{playtester.description}</Markdown>
+            </div>
           </HoverCard.Content>
         </HoverCard.Portal>
       </HoverCard.Root>
