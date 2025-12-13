@@ -1,0 +1,11 @@
+.design-wrapper {
+  width: 100%;
+  max-width: var(--column-width-01);
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.design-wrapper section {
+  width: 100%;
+}

@@ -3,7 +3,7 @@ form {
   flex-flow: column;
   background-color: var(--color-bg-alt);
   padding: var(--spacing-02) var(--spacing-02);
-  gap: var(--spacing-01);
+  gap: var(--spacing-02);
   border: var(--border);
   border-radius: var(--border-radius);
 }
@@ -56,6 +56,10 @@ textarea {
   gap: var(--spacing-q);
 }
 
+.c-button svg {
+  flex: 1 0 auto;
+}
+
 .c-button:hover {
   color: var(--color-bg);
   background: var(--color-fg);
@@ -65,4 +69,19 @@ label {
   display: flex;
   flex-flow: column;
   gap: var(--spacing-01);
+}
+
+form .cluster {
+  align-items: flex-end;
+}
+
+form .cluster > label {
+  flex: 1;
+}
+form footer {
+  display: flex;
+  width: 100%;
+  flex-flow: row;
+  justify-content: flex-end;
+  align-items: flex-end;
 }

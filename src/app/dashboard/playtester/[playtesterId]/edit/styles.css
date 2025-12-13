@@ -7,7 +7,7 @@
   justify-content: space-between;
 }
 
-.p-playtester-edit form button {
+.p-playtester-edit form .c-button {
   align-self: flex-end;
 }
 
