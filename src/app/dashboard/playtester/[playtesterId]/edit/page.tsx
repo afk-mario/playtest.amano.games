@@ -5,7 +5,7 @@ import { createClient } from "utils/supabase/server";
 
 import { editPlaytester } from "./actions";
 import AddKeyForm from "./add-key-form";
-import { ChevronLeft, ChevronRight, ChevronsLeft, Save } from "lucide-react";
+import { ChevronLeft, ChevronRight, Save } from "lucide-react";
 import ChangeAvatarForm from "./avatar-form";
 
 import PlaytesterInfo from "../playtester-info";
@@ -93,9 +93,6 @@ export default async function Page(props: {
     <div className="p-playtester-edit | stack">
       <header className="p-playtester-edit-header | cluster">
         <div className="cluster">
-          <Link href="/dashboard">
-            <ChevronsLeft />
-          </Link>
           {prevId != null ? (
             <Link
               href={`/dashboard/playtester/${playtestersQuery.data[prevId].id}/edit`}

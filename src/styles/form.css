@@ -27,7 +27,6 @@ textarea:read-only {
   border-color: transparent;
   caret-color: transparent;
   outline: transparent;
-  padding: 0;
 }
 
 input:disabled {
