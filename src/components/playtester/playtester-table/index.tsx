@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useActionState } from "react";
 import Link from "next/link";
 import { Circle, CircleCheck } from "lucide-react";
 import {
@@ -19,6 +19,7 @@ import { updateKeyState } from "app/dashboard/contact/[contactId]/edit/actions";
 import "./styles.css";
 import "./actions.css";
 import { PlaytesterSendEmailForm } from "../playtester-send-email-form";
+import { GameKeyUpdateForm } from "containers/game-key/game-key-update-form";
 
 type PlaytesterWithGameKeys = {
   game_key: Tables<"game_key">[];
@@ -145,37 +146,9 @@ const columns = [
       const gameKeys: Tables<"game_key">[] =
         info.row.getValue("game_key") || [];
       const [gameKey] = gameKeys;
+      const playtesterId = info.row.getValue("id") as string;
       return (
-        <form action={updateKeyState} className="c-update-key-row-action">
-          <input
-            name="playtesterId"
-            type="text"
-            value={info.row.getValue("id")}
-            readOnly
-            hidden
-          />
-          <input
-            name="keyId"
-            type="text"
-            value={gameKey?.id || undefined}
-            readOnly
-            hidden
-          />
-          <input
-            name="keyUrl"
-            type="text"
-            value={gameKey?.url || undefined}
-            readOnly
-            hidden
-          />
-          <button type="submit" disabled={gameKey == null}>
-            {info.getValue() ? (
-              <CircleCheck color="var(--color-hl)" />
-            ) : (
-              <Circle />
-            )}
-          </button>
-        </form>
+        <GameKeyUpdateForm gameKey={gameKey} playtesterId={playtesterId} />
       );
     },
   }),
