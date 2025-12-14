@@ -21,7 +21,7 @@ export default function PlaytesterWidget({
     <div className="c-playterster-widget">
       <HoverCard.Root openDelay={300} closeDelay={10000}>
         <HoverCard.Trigger asChild>
-          <Link href={`/dashboard/playtester/${playtester.id}/edit/`}>
+          <Link href={`/dashboard/contact/${playtester.id}/edit/`}>
             <Avatar.Root className="c-playtester-widget-trigger c-avatar">
               <Avatar.Image
                 className="c-avatar-image"
