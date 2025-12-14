@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import "./styles.css";
 
 import { createClient } from "utils/supabase/server";
-import { PlaytesterFeedbackItem } from "components/playtester/playtester-feedback-item";
+import FeedbackItem from "containers/feedback/feedback-item";
 
 export default async function Dashboard() {
   const supabase = await createClient();
@@ -23,7 +23,7 @@ export default async function Dashboard() {
       <div className="p-feedback-list stack">
         {feedbacks?.map((item, i) => {
           return (
-            <PlaytesterFeedbackItem
+            <FeedbackItem
               key={i}
               game={item.game}
               feedback={item}

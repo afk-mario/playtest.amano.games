@@ -2,12 +2,13 @@ import { Tables } from "types/supabase";
 import Markdown from "react-markdown";
 
 import Link from "next/link";
-import PlaytesterWidget from "../playtester-widget";
 import Time from "components/time";
+
+import PlaytesterWidget from "components/playtester/playtester-widget";
 
 import "./styles.css";
 
-export function PlaytesterFeedbackItem({
+export default function FeedbackItem({
   playtester,
   feedback,
   game,

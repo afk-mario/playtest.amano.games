@@ -17,6 +17,7 @@ import KeyEditForm from "./key-edit-form";
 import PlaytesterNoteForm from "components/playtester/playtester-note-form";
 
 import "./styles.css";
+import FeedbackItem from "containers/feedback/feedback-item";
 
 export default async function Page(props: {
   params: Promise<{ contactId: string }>;
@@ -144,7 +145,7 @@ export default async function Page(props: {
       <div className="stack">
         {playtester.feedback.map((item) => {
           return (
-            <PlaytesterFeedbackItem
+            <FeedbackItem
               key={item.id}
               feedback={item}
               playtester={playtester}

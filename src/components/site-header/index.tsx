@@ -26,9 +26,9 @@ export default async function SiteHeader() {
                 <SquareChartGantt />
                 Timeline
               </Link>
-              <Link className="c-button" href="/dashboard/playtester">
+              <Link className="c-button" href="/dashboard/contact">
                 <Users />
-                Playtesters
+                Contacts
               </Link>
               <form action={logout}>
                 <button className="c-button">
