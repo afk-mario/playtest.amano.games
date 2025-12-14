@@ -88,12 +88,14 @@ pre {
   font-family: Space Mono, monospace;
 }
 
-code:not([class]) {
-  font-size: 0.9em;
-  padding: 0 var(--margin-01);
-  color: var(--yellow);
-  border-radius: var(--margin-01);
-  background: var(--gray);
+pre:not([class]) {
+  border: var(--border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-01) var(--spacing-02);
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 time {
