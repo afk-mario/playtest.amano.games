@@ -18,6 +18,7 @@ import PlaytesterNoteForm from "components/playtester/playtester-note-form";
 import "./styles.css";
 import FeedbackItem from "containers/feedback/feedback-item";
 import ContactDeleteForm from "containers/contact/contactDelete";
+import SocialProfileForm from "containers/social/social-form";
 
 export default async function Page(props: {
   params: Promise<{ contactId: string }>;
@@ -98,6 +99,19 @@ export default async function Page(props: {
 
   const games = gamesQuery.data;
   const playtester = playtesterQuery.data;
+  const discordProfile = playtester.social_profile.find(
+    (item: Tables<"social_profile">) => item.platform === "discord"
+  );
+  const twitterProfile = playtester.social_profile.find(
+    (item: Tables<"social_profile">) => item.platform === "twitter"
+  );
+  const blueskyProfile = playtester.social_profile.find(
+    (item: Tables<"social_profile">) => item.platform === "bluesky"
+  );
+  const mastodonProfile = playtester.social_profile.find(
+    (item: Tables<"social_profile">) => item.platform === "mastodon"
+  );
+
   const currentIndex = playtestersQuery.data.findIndex(
     (item) => item.id === Number(contactId)
   );
@@ -155,7 +169,26 @@ export default async function Page(props: {
       />
 
       <PlaytesterNoteForm playtesterId={contactId} notes={playtester.notes} />
-      <PlaytesterDiscordForm playtester={playtester} />
+      <SocialProfileForm
+        playtester={playtester}
+        platform={"discord"}
+        socialProfile={discordProfile || undefined}
+      />
+      <SocialProfileForm
+        playtester={playtester}
+        platform={"mastodon"}
+        socialProfile={mastodonProfile}
+      />
+      <SocialProfileForm
+        playtester={playtester}
+        platform={"bluesky"}
+        socialProfile={blueskyProfile}
+      />
+      <SocialProfileForm
+        playtester={playtester}
+        platform={"twitter"}
+        socialProfile={twitterProfile}
+      />
       <FeedbackAddForm playtester={playtester} games={games} />
       <div className="stack">
         {feedbackQuery.data.map((item) => {

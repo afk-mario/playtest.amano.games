@@ -1,4 +1,12 @@
 import { Tables } from "types/supabase";
+import {
+  getMastodonAvatarURLByHandle,
+  getMastodonUserData,
+  parseMastodonHandle,
+} from "./mastodon";
+import { getDiscordAvatarURL, getDiscordUserData } from "./discord";
+import { getBlueskyProfile } from "./bluesky";
+import { getTwitterUserDataByUsername } from "./twitter";
 
 export function getSocialURL(profile: Tables<"social_profile">) {
   switch (profile.platform) {
@@ -9,9 +17,8 @@ export function getSocialURL(profile: Tables<"social_profile">) {
         .replace(/\./g, "")}`;
     case "mastodon": {
       if (profile.social_id == null) return null;
-      const bits = profile.social_id?.split("@");
-      const [, user, server] = bits;
-      return `https://${server}/@${user}`;
+      const { username, instance } = parseMastodonHandle(profile.social_id);
+      return `https://${instance}/@${username}`;
     }
     case "bluesky": {
       if (profile.social_id == null) return null;
@@ -29,4 +36,58 @@ export function getSocialURL(profile: Tables<"social_profile">) {
     default:
       return null;
   }
+}
+
+export async function getSocialDisplayName(platform: string, socialId: string) {
+  switch (platform) {
+    case "discord": {
+      const discordUser = await getDiscordUserData(socialId);
+      return discordUser.username;
+    }
+    case "bluesky": {
+      try {
+        const res = await getBlueskyProfile(socialId);
+        return res.displayName;
+      } catch (e) {
+        console.error(`${e}`);
+        return null;
+      }
+    }
+    case "mastodon": {
+      const mastodonAccont = await getMastodonUserData(socialId);
+      return mastodonAccont.display_name;
+    }
+    case "twitter": {
+      const twitterUser = await getTwitterUserDataByUsername(socialId);
+      return twitterUser.name;
+    }
+  }
+  return null;
+}
+
+export async function getSocialAvatarUrl(platform: string, socialId: string) {
+  switch (platform) {
+    case "discord": {
+      const avatarUrl = await getDiscordAvatarURL(socialId);
+      return avatarUrl;
+    }
+    case "mastodon": {
+      const avatarUrl = await getMastodonAvatarURLByHandle(socialId);
+      return avatarUrl;
+    }
+    case "bluesky": {
+      try {
+        const res = await getBlueskyProfile(socialId);
+        return res.displayName;
+      } catch (e) {
+        console.error(`${e}`);
+        return null;
+      }
+    }
+    case "twitter": {
+      const twitterUser = await getTwitterUserDataByUsername(socialId);
+      return twitterUser.name;
+    }
+  }
+  return null;
 }

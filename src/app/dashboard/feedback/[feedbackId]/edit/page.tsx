@@ -1,8 +1,11 @@
 "use server";
 
 import { createClient } from "utils/supabase/server";
+import Link from "next/link";
+
 import FeedbackEditForm from "./feedback-edit-form";
 import FeedbackDeleteForm from "./feedback-delete-form";
+import PlaytesterWidget from "components/playtester/playtester-widget";
 
 import "./styles.css";
 
@@ -38,13 +41,35 @@ export default async function Page(props: {
     );
   }
 
+  const contactQuery = await supabase
+    .from("playtester")
+    .select("*,social_profile(*)")
+    .eq("id", feedbackQuery.data.playtester)
+    .single();
+
+  if (contactQuery.error) {
+    return (
+      <div>
+        <h2>Error Playtesters</h2>
+        <pre>{JSON.stringify(contactQuery.error, null, 2)}</pre>
+      </div>
+    );
+  }
+
   const games = gamesQuery.data;
   const feedback = feedbackQuery.data;
+  const contact = contactQuery.data;
 
   return (
     <div className="p-feedback-edit | stack">
       <header>
-        <h2>Edit Feedback {feedbackId}</h2>
+        <PlaytesterWidget playtester={contact} />
+        <h2>
+          Edit Feedback by{" "}
+          <Link href={`/dashboard/contact/${contact.id}/edit`}>
+            {contact.name}
+          </Link>
+        </h2>
         <FeedbackDeleteForm feedbackId={feedbackId} />
       </header>
       <FeedbackEditForm feedback={feedback} games={games} />
