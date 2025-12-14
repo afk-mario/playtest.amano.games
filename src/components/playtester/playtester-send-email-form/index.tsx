@@ -1,9 +1,12 @@
+"use client";
 import { Tables } from "types/supabase";
 import { Send } from "lucide-react";
 
 import { sendGameKeyEmail } from "app/dashboard/contact/[contactId]/edit/actions";
 
 import "./styles.css";
+import { useActionState } from "react";
+import Spinner from "components/spinner";
 
 export function PlaytesterSendEmailForm({
   playtester,
@@ -13,8 +16,9 @@ export function PlaytesterSendEmailForm({
   };
 }) {
   const [gameKey] = playtester.game_key;
+  const [, action, pending] = useActionState(sendGameKeyEmail, false);
   return (
-    <form className="c-playtester-send-mail-form" action={sendGameKeyEmail}>
+    <form className="c-playtester-send-mail-form" action={action}>
       <input
         name="playtesterId"
         type="text"
@@ -50,8 +54,8 @@ export function PlaytesterSendEmailForm({
         readOnly
         hidden
       />
-      <button className="c-button" type="submit">
-        <Send color="currentColor" />
+      <button className="c-button" type="submit" disabled={pending}>
+        {pending ? <Spinner /> : <Send color="currentColor" />}
       </button>
     </form>
   );
