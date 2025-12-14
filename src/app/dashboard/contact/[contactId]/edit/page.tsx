@@ -8,7 +8,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import ChangeAvatarForm from "./avatar-form";
 
 import PlaytesterInfo from "../contact-info";
-import PlaytesterDiscordForm from "./discord-form";
 
 import FeedbackAddForm from "./feedback-add-form";
 import { Tables } from "types/supabase";
