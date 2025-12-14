@@ -4,6 +4,10 @@
   gap: var(--spacing-01);
 }
 
+.c-add-key-form .c-button {
+  margin-top: auto;
+}
+
 .c-key-field {
   flex: 1;
   display: flex;
@@ -19,7 +23,8 @@
   padding-bottom: var(--spacing-02);
   overflow-y: auto;
   background-color: var(--color-bg);
-  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+  box-shadow:
+    hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
     hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
   animation-duration: 400ms;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
@@ -27,8 +32,10 @@
 }
 
 .c-add-key-popover-content:focus {
-  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
-    hsl(206 22% 7% / 20%) 0px 10px 20px -15px, 0 0 0 2px var(--violet-7);
+  box-shadow:
+    hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px,
+    0 0 0 2px var(--violet-7);
 }
 .c-add-key-popover-content[data-state="open"][data-side="top"] {
   animation-name: slideDownAndFade;

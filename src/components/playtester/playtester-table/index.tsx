@@ -14,7 +14,7 @@ import { Tables } from "types/supabase";
 
 import PlaytesterWidget from "../playtester-widget";
 
-import { updateKeyState } from "app/dashboard/playtester/[playtesterId]/edit/actions";
+import { updateKeyState } from "app/dashboard/contact/[contactId]/edit/actions";
 
 import "./styles.css";
 import "./actions.css";
@@ -31,7 +31,7 @@ const columns = [
   columnHelper.accessor("id", {
     header: "№",
     cell: (info) => (
-      <Link href={`/dashboard/playtester/${info.getValue()}/edit/`}>
+      <Link href={`/dashboard/contact/${info.getValue()}/edit/`}>
         {info.row.index + 1}
       </Link>
     ),
@@ -46,7 +46,7 @@ const columns = [
     header: "Name",
     cell: (info) => {
       return (
-        <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
+        <Link href={`/dashboard/contact/${info.row.getValue("id")}/edit/`}>
           {info.getValue()}
         </Link>
       );
@@ -68,7 +68,7 @@ const columns = [
       return (
         <Link
           className="cell-tag"
-          href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}
+          href={`/dashboard/contact/${info.row.getValue("id")}/edit/`}
         >
           <ul className="c-tag-list">
             {info
@@ -88,7 +88,7 @@ const columns = [
   //   header: "Signup",
   //   cell: (info) => {
   //     return (
-  //       <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
+  //       <Link href={`/dashboard/contact/${info.row.getValue("id")}/edit/`}>
   //         <Time formatStr="PP hh:mm:ss">{info.getValue()}</Time>;
   //       </Link>
   //     );
@@ -98,7 +98,7 @@ const columns = [
   //   header: "Created",
   //   cell: (info) => {
   //     return (
-  //       <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
+  //       <Link href={`/dashboard/contact/${info.row.getValue("id")}/edit/`}>
   //         <Time formatStr="PP hh:mm:ss">{info.getValue()}</Time>
   //       </Link>
   //     );
@@ -108,7 +108,7 @@ const columns = [
     header: "Key?",
     cell: (info) => {
       return (
-        <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
+        <Link href={`/dashboard/contact/${info.row.getValue("id")}/edit/`}>
           {info.getValue().length > 0 ? (
             <CircleCheck color="var(--color-hl)" />
           ) : (
@@ -128,7 +128,7 @@ const columns = [
       const keySent = gameKey?.key_sent != null;
       if (keySent) {
         return (
-          <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
+          <Link href={`/dashboard/contact/${info.row.getValue("id")}/edit/`}>
             <CircleCheck color="var(--color-hl)" />
           </Link>
         );
@@ -228,7 +228,7 @@ export default function PlaytesterTable({
                     ? null
                     : flexRender(
                         header.column.columnDef.header,
-                        header.getContext()
+                        header.getContext(),
                       )}
                 </th>
               ))}
@@ -255,7 +255,7 @@ export default function PlaytesterTable({
                     ? null
                     : flexRender(
                         header.column.columnDef.footer,
-                        header.getContext()
+                        header.getContext(),
                       )}
                 </th>
               ))}

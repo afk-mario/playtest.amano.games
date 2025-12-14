@@ -7,7 +7,7 @@ import KeyAddForm from "./key-add-form";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ChangeAvatarForm from "./avatar-form";
 
-import PlaytesterInfo from "../playtester-info";
+import PlaytesterInfo from "../contact-info";
 import PlaytesterDiscordForm from "./discord-form";
 
 import FeedbackAddForm from "./feedback-add-form";
@@ -19,17 +19,17 @@ import PlaytesterNoteForm from "components/playtester/playtester-note-form";
 import "./styles.css";
 
 export default async function Page(props: {
-  params: Promise<{ playtesterId: string }>;
+  params: Promise<{ contactId: string }>;
 }) {
   const params = await props.params;
-  const { playtesterId } = params;
+  const { contactId } = params;
   const supabase = await createClient();
   const playtesterQuery = await supabase
     .from("playtester")
     .select(
       `*, game_key(*, game:game(*)), social_profile(*), feedback(*, game(*))`,
     )
-    .eq("id", playtesterId)
+    .eq("id", contactId)
     .single();
 
   if (playtesterQuery.error) {
@@ -83,7 +83,7 @@ export default async function Page(props: {
   const games = gamesQuery.data;
   const playtester = playtesterQuery.data;
   const currentIndex = playtestersQuery.data.findIndex(
-    (item) => item.id === Number(playtesterId),
+    (item) => item.id === Number(contactId),
   );
 
   const nextId =
@@ -96,7 +96,7 @@ export default async function Page(props: {
         <div className="cluster">
           {prevId != null ? (
             <Link
-              href={`/dashboard/playtester/${playtestersQuery.data[prevId].id}/edit`}
+              href={`/dashboard/contact/${playtestersQuery.data[prevId].id}/edit`}
             >
               <ChevronLeft />
             </Link>
@@ -105,7 +105,7 @@ export default async function Page(props: {
         <h2>{playtester.name}</h2>
         {nextId ? (
           <Link
-            href={`/dashboard/playtester/${playtestersQuery.data[nextId].id}/edit`}
+            href={`/dashboard/contact/${playtestersQuery.data[nextId].id}/edit`}
           >
             <ChevronRight />
           </Link>
@@ -113,7 +113,7 @@ export default async function Page(props: {
       </header>
       <div className="p-playtester-edit-info-container ">
         <ChangeAvatarForm
-          playtesterId={playtesterId}
+          playtesterId={contactId}
           avatar={playtester.avatar || undefined}
         />
         <PlaytesterInfo playtester={playtester} />
@@ -134,14 +134,11 @@ export default async function Page(props: {
         : null}
 
       <KeyAddForm
-        playtesterId={Number(playtesterId)}
+        playtesterId={Number(contactId)}
         defaultKeys={gameKeysQuery.data}
       />
 
-      <PlaytesterNoteForm
-        playtesterId={playtesterId}
-        notes={playtester.notes}
-      />
+      <PlaytesterNoteForm playtesterId={contactId} notes={playtester.notes} />
       <PlaytesterDiscordForm playtester={playtester} />
       <FeedbackAddForm playtester={playtester} games={games} />
       <div className="stack">

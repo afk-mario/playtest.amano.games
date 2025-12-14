@@ -25,7 +25,7 @@ export function PlaytesterFeedbackItem({
       </div>
       <div className="c-feedback-item-content">
         <header className="cluster">
-          <Link href={`/dashboard/playtester/${playtester.id}/edit/`}>
+          <Link href={`/dashboard/contact/${playtester.id}/edit/`}>
             <h3>
               {playtester.name} @ {feedback.platform}
             </h3>

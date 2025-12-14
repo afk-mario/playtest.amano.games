@@ -18,7 +18,7 @@ export async function editPlaytester(prevState, formData: FormData) {
     .update({ notes: rawFormData.notes })
     .eq("id", Number(rawFormData.playtesterId!))
     .select();
-  revalidatePath("/dashboard/playtester/[playtesterId]", "page");
+  revalidatePath("/dashboard/contact/[contactId]", "page");
 }
 
 export async function removeKey(prevState, formData: FormData) {
@@ -32,7 +32,7 @@ export async function removeKey(prevState, formData: FormData) {
     .update({ playtester: null })
     .eq("id", Number(rawFormData.keyId!))
     .select();
-  revalidatePath("/dashboard/playtester/[playtesterId]", "page");
+  revalidatePath("/dashboard/contact/[contactId]", "page");
 }
 
 export async function addKey(prevState, formData: FormData) {
@@ -47,7 +47,7 @@ export async function addKey(prevState, formData: FormData) {
     .update({ playtester: Number(rawFormData.playtesterId) })
     .eq("id", Number(rawFormData.keyId))
     .select();
-  revalidatePath("/dashboard/playtester/[playtesterId]", "page");
+  revalidatePath("/dashboard/contact/[contactId]", "page");
 }
 
 export async function changeAvatar(prevState, formData: FormData) {
@@ -75,7 +75,7 @@ export async function changeAvatar(prevState, formData: FormData) {
       avatar: data.publicUrl,
     })
     .eq("id", rawFormData.playtesterId);
-  revalidatePath("/dashboard/playtester/[playtesterId]", "page");
+  revalidatePath("/dashboard/contact/[contactId]", "page");
 }
 
 export async function updateKeyState(prevState, formData: FormData) {
@@ -116,7 +116,7 @@ export async function updateKeyState(prevState, formData: FormData) {
     }
   }
 
-  revalidatePath("/dashboard/playtester/[playtesterId]", "page");
+  revalidatePath("/dashboard/contact/[contactId]", "page");
   revalidatePath("/dashboard/", "page");
 }
 
@@ -163,7 +163,7 @@ export async function saveDiscord(prevState, formData: FormData) {
     },
     { onConflict: "playtester,platform", ignoreDuplicates: false },
   );
-  revalidatePath("/dashboard/playtester/[playtesterId]", "page");
+  revalidatePath("/dashboard/contact/[contactId]", "page");
   revalidatePath("/dashboard/", "page");
 }
 
@@ -181,7 +181,7 @@ export async function updateDiscord(prevState, formData: FormData) {
       display_name: discordUser.username,
     })
     .eq("id", discordProfileId);
-  revalidatePath("/dashboard/playtester/[playtesterId]", "page");
+  revalidatePath("/dashboard/contact/[contactId]", "page");
   revalidatePath("/dashboard/", "page");
 }
 
@@ -211,7 +211,7 @@ export async function scrapeDiscordAvatar(prevState, formData: FormData) {
       avatar: data.publicUrl,
     })
     .eq("id", playtesterId);
-  revalidatePath("/dashboard/playtester/[playtesterId]", "page");
+  revalidatePath("/dashboard/contact/[contactId]", "page");
 }
 
 export async function addFeedback(prevState, formData: FormData) {
@@ -234,5 +234,5 @@ export async function addFeedback(prevState, formData: FormData) {
   if (res.error) {
     console.error(res.error);
   }
-  revalidatePath("/dashboard/playtester/[playtesterId]", "page");
+  revalidatePath("/dashboard/contact/[contactId]", "page");
 }

@@ -1,5 +1,5 @@
 "use client";
-import { editPlaytester } from "app/dashboard/playtester/[playtesterId]/edit/actions";
+import { editPlaytester } from "app/dashboard/contact/[contactId]/edit/actions";
 import Spinner from "components/spinner";
 import { Save } from "lucide-react";
 import { useActionState } from "react";
@@ -25,9 +25,11 @@ export default function PlaytesterNoteForm({
         <span>Notes</span>
         <textarea name="notes" defaultValue={notes} rows={10} />
       </label>
-      <button className="c-button" type="submit" disabled={pending}>
-        {pending ? <Spinner /> : <Save />} Save
-      </button>
+      <footer>
+        <button className="c-button" type="submit" disabled={pending}>
+          {pending ? <Spinner /> : <Save />} Save
+        </button>
+      </footer>
     </form>
   );
 }

@@ -1,7 +1,7 @@
 import { Tables } from "types/supabase";
 import { Send } from "lucide-react";
 
-import { sendGameKeyEmail } from "app/dashboard/playtester/[playtesterId]/edit/actions";
+import { sendGameKeyEmail } from "app/dashboard/contact/[contactId]/edit/actions";
 
 import "./styles.css";
 
