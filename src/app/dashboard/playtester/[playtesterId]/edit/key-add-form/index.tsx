@@ -1,7 +1,7 @@
 "use client";
 
 import { CircleX, CirclePlus } from "lucide-react";
-import React from "react";
+import React, { useActionState } from "react";
 import { useCombobox } from "downshift";
 import * as Popover from "@radix-ui/react-popover";
 
@@ -9,6 +9,7 @@ import { addKey } from "../actions";
 import { Tables } from "types/supabase";
 
 import "./styles.css";
+import Spinner from "components/spinner";
 
 function getGameKeyFilter(inputValue: string) {
   const lowerCasedInputValue = inputValue.toLowerCase();
@@ -18,7 +19,7 @@ function getGameKeyFilter(inputValue: string) {
   };
 }
 
-export default function AddKeyForm({
+export default function KeyAddForm({
   playtesterId,
   defaultKeys = [],
 }: {
@@ -51,9 +52,10 @@ export default function AddKeyForm({
       return item.url?.toString() || "";
     },
   });
+  const [, action, pending] = useActionState(addKey, false);
 
   return (
-    <form action={addKey} id="addKey" className="c-add-key-form">
+    <form action={action} id="addKey" className="c-add-key-form">
       <input
         name="playtesterId"
         type="text"
@@ -126,8 +128,8 @@ export default function AddKeyForm({
         </Popover.Root>
       </div>
 
-      <button className="c-button" type="submit">
-        <CirclePlus /> Add
+      <button className="c-button" type="submit" disabled={pending}>
+        {pending ? <Spinner /> : <CirclePlus />} Add
       </button>
     </form>
   );

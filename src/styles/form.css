@@ -65,6 +65,12 @@ textarea {
   background: var(--color-fg);
 }
 
+.c-button:disabled {
+  border-color: transparent;
+  cursor: not-allowed;
+  color: var(--color-bg-alt);
+}
+
 label {
   display: flex;
   flex-flow: column;

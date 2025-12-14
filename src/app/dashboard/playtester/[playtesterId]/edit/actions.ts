@@ -6,7 +6,7 @@ import { getDiscordAvatarURL, getDiscordUserData } from "utils/social/discord";
 import { extractItchDownloadToken, getKeyInfo } from "utils/social/itch";
 import { createClient } from "utils/supabase/server";
 
-export async function editPlaytester(formData: FormData) {
+export async function editPlaytester(prevState, formData: FormData) {
   const supabase = await createClient();
   const rawFormData = {
     playtesterId: formData.get("playtesterId"),
@@ -21,7 +21,7 @@ export async function editPlaytester(formData: FormData) {
   revalidatePath("/dashboard/playtester/[playtesterId]", "page");
 }
 
-export async function removeKey(formData: FormData) {
+export async function removeKey(prevState, formData: FormData) {
   const supabase = await createClient();
   const rawFormData = {
     keyId: formData.get("keyId"),
@@ -35,7 +35,7 @@ export async function removeKey(formData: FormData) {
   revalidatePath("/dashboard/playtester/[playtesterId]", "page");
 }
 
-export async function addKey(formData: FormData) {
+export async function addKey(prevState, formData: FormData) {
   const supabase = await createClient();
   const rawFormData = {
     playtesterId: formData.get("playtesterId"),
@@ -50,7 +50,7 @@ export async function addKey(formData: FormData) {
   revalidatePath("/dashboard/playtester/[playtesterId]", "page");
 }
 
-export async function changeAvatar(formData: FormData) {
+export async function changeAvatar(prevState, formData: FormData) {
   const supabase = await createClient();
   const bucket = "media";
   const rawFormData = {
@@ -78,7 +78,7 @@ export async function changeAvatar(formData: FormData) {
   revalidatePath("/dashboard/playtester/[playtesterId]", "page");
 }
 
-export async function updateKeyState(formData: FormData) {
+export async function updateKeyState(prevState, formData: FormData) {
   const supabase = await createClient();
   const { keyUrl, gameId, playtesterId } = {
     keyUrl: formData.get("keyUrl") as string,
@@ -111,7 +111,7 @@ export async function updateKeyState(formData: FormData) {
           display_name: owner.username,
           social_id: owner.id.toString(),
         },
-        { onConflict: "playtester,platform", ignoreDuplicates: false }
+        { onConflict: "playtester,platform", ignoreDuplicates: false },
       );
     }
   }
@@ -120,7 +120,7 @@ export async function updateKeyState(formData: FormData) {
   revalidatePath("/dashboard/", "page");
 }
 
-export async function sendGameKeyEmail(formData: FormData) {
+export async function sendGameKeyEmail(prevState, formData: FormData) {
   console.log("Sending email");
   const supabase = await createClient();
   const { keyUrl, playtesterName, playtesterEmail } = {
@@ -148,7 +148,7 @@ export async function sendGameKeyEmail(formData: FormData) {
   }
 }
 
-export async function saveDiscord(formData: FormData) {
+export async function saveDiscord(prevState, formData: FormData) {
   const supabase = await createClient();
   const { playtesterId, discordSocialId } = {
     playtesterId: Number(formData.get("playtesterId")),
@@ -161,13 +161,13 @@ export async function saveDiscord(formData: FormData) {
       playtester: playtesterId,
       social_id: discordSocialId,
     },
-    { onConflict: "playtester,platform", ignoreDuplicates: false }
+    { onConflict: "playtester,platform", ignoreDuplicates: false },
   );
   revalidatePath("/dashboard/playtester/[playtesterId]", "page");
   revalidatePath("/dashboard/", "page");
 }
 
-export async function updateDiscord(formData: FormData) {
+export async function updateDiscord(prevState, formData: FormData) {
   const supabase = await createClient();
   const { discordSocialId, discordProfileId } = {
     discordProfileId: Number(formData.get("discordProfileId")),
@@ -185,7 +185,7 @@ export async function updateDiscord(formData: FormData) {
   revalidatePath("/dashboard/", "page");
 }
 
-export async function scrapeDiscordAvatar(formData: FormData) {
+export async function scrapeDiscordAvatar(prevState, formData: FormData) {
   const supabase = await createClient();
   const bucket = "media";
   const { playtesterId, discordSocialId } = {
@@ -214,7 +214,7 @@ export async function scrapeDiscordAvatar(formData: FormData) {
   revalidatePath("/dashboard/playtester/[playtesterId]", "page");
 }
 
-export async function addFeedback(formData: FormData) {
+export async function addFeedback(prevState, formData: FormData) {
   const supabase = await createClient();
   const { gameId, playtesterId, feedbackPlatform, feedbackText } = {
     playtesterId: Number(formData.get("playtesterId")),
@@ -222,14 +222,17 @@ export async function addFeedback(formData: FormData) {
     feedbackText: formData.get("feedbackText") as string,
     gameId: Number(formData.get("gameId")),
   };
-  await supabase
+  const res = await supabase
     .from("feedback")
     .insert({
       playtester: playtesterId,
       platform: feedbackPlatform,
       text: feedbackText,
-      gameId: gameId,
+      game: gameId,
     })
     .eq("id", playtesterId);
+  if (res.error) {
+    console.error(res.error);
+  }
   revalidatePath("/dashboard/playtester/[playtesterId]", "page");
 }

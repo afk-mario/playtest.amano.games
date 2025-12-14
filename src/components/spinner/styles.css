@@ -5,8 +5,6 @@
 }
 
 .c-spinner {
-  width: var(--size-500);
-  height: auto;
   aspect-ratio: 1/1;
   stroke: currentColor;
   animation: c-spin 2s linear infinite;

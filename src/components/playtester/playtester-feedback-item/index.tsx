@@ -30,7 +30,9 @@ export function PlaytesterFeedbackItem({
               {playtester.name} @ {feedback.platform}
             </h3>
           </Link>
-          <Time formatStr="PP hh:mm:ss">{feedback.timestamp}</Time>
+          <Link href={`/dashboard/feedback/${feedback.id}/edit/`}>
+            <Time formatStr="PP hh:mm:ss">{feedback.timestamp}</Time>
+          </Link>
         </header>
         <div className="c-feedback-item-text | stack">
           <Markdown>{feedback.text}</Markdown>

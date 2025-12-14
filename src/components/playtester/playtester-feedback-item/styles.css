@@ -28,6 +28,7 @@
 }
 
 .c-feedback-item .c-feedback-item-content {
+  width: 100%;
   display: flex;
   flex-flow: column;
   gap: var(--spacing-01);

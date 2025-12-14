@@ -1,9 +1,13 @@
+"use client";
+
 import Time from "components/time";
 import { Tables } from "types/supabase";
 import { RefreshCcw, Send, Trash } from "lucide-react";
 import { removeKey, sendGameKeyEmail, updateKeyState } from "../actions";
 
 import "./styles.css";
+import { useActionState } from "react";
+import Spinner from "components/spinner";
 
 export default function KeyEditForm({
   gameKey,
@@ -12,6 +16,19 @@ export default function KeyEditForm({
   gameKey: Tables<"game_key"> & { game: Tables<"game"> };
   playtester: Tables<"playtester">;
 }) {
+  const [, updateKeyStateAction, updateKeyStatePending] = useActionState(
+    updateKeyState,
+    false,
+  );
+  const [, sendGameKeyEmailAction, sendGameKeyEmailPending] = useActionState(
+    sendGameKeyEmail,
+    false,
+  );
+  const [, removeKeyAction, removeKeyPending] = useActionState(
+    removeKey,
+    false,
+  );
+
   return (
     <form
       key={gameKey.id}
@@ -69,18 +86,29 @@ export default function KeyEditForm({
         />
       </label>
       <div className="c-key-edit-form-actions cluster">
-        <button className="c-button" type="submit" formAction={updateKeyState}>
-          <RefreshCcw />
+        <button
+          className="c-button"
+          type="submit"
+          formAction={updateKeyStateAction}
+          disabled={updateKeyStatePending}
+        >
+          {updateKeyStatePending ? <Spinner /> : <RefreshCcw />}
         </button>
         <button
           className="c-button"
           type="submit"
-          formAction={sendGameKeyEmail}
+          formAction={sendGameKeyEmailAction}
+          disabled={sendGameKeyEmailPending}
         >
-          <Send />
+          {sendGameKeyEmailPending ? <Spinner /> : <Send />}
         </button>
-        <button className="c-button" type="submit" formAction={removeKey}>
-          <Trash />
+        <button
+          className="c-button"
+          type="submit"
+          formAction={removeKeyAction}
+          disabled={removeKeyPending}
+        >
+          {removeKeyPending ? <Spinner /> : <Trash />}
         </button>
       </div>
     </form>

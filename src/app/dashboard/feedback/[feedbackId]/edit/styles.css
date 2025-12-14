@@ -1,0 +1,11 @@
+.p-feedback-edit {
+  max-width: var(--column-width-01);
+  margin: auto;
+}
+
+.p-feedback-edit header {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}

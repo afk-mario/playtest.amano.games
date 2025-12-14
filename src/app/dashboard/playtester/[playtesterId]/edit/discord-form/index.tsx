@@ -1,9 +1,12 @@
+"use client";
+import { useActionState } from "react";
 import { Tables } from "types/supabase";
 
 import { RefreshCcw, ImageUp, Save } from "lucide-react";
 import { saveDiscord, scrapeDiscordAvatar, updateDiscord } from "../actions";
 
 import "./styles.css";
+import Spinner from "components/spinner";
 
 export default function PlaytesterDiscordForm({
   playtester,
@@ -13,11 +16,21 @@ export default function PlaytesterDiscordForm({
   };
 }) {
   const discordProfile = playtester.social_profile.find(
-    (item) => item.platform === "discord"
+    (item) => item.platform === "discord",
   );
 
+  const [, saveDiscordAction, saveDiscordPending] = useActionState(
+    saveDiscord,
+    false,
+  );
+  const [, scrapeDiscordAvatarAction, scrapeDiscordAvatarPending] =
+    useActionState(scrapeDiscordAvatar, false);
+  const [, updateDiscordAction, updateDiscordPending] = useActionState(
+    updateDiscord,
+    false,
+  );
   return (
-    <form action={saveDiscord}>
+    <form action={saveDiscordAction}>
       <h3>Discord</h3>
       <input
         name="playtesterId"
@@ -62,22 +75,28 @@ export default function PlaytesterDiscordForm({
             <button
               className="c-button"
               type="submit"
-              formAction={scrapeDiscordAvatar}
+              formAction={scrapeDiscordAvatarAction}
+              disabled={scrapeDiscordAvatarPending}
             >
-              <ImageUp />
+              {scrapeDiscordAvatarPending ? <Spinner /> : <ImageUp />}
             </button>
           ) : null}
           {discordProfile != null ? (
             <button
               className="c-button"
               type="submit"
-              formAction={updateDiscord}
+              formAction={updateDiscordAction}
+              disabled={updateDiscordPending}
             >
-              <RefreshCcw />
+              {updateDiscordPending ? <Spinner /> : <RefreshCcw />}
             </button>
           ) : null}
-          <button className="c-button" type="submit">
-            <Save />
+          <button
+            className="c-button"
+            type="submit"
+            disabled={saveDiscordPending}
+          >
+            {saveDiscordPending ? <Spinner /> : <Save />}
             Save
           </button>
         </div>

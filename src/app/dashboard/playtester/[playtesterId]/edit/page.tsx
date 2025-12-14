@@ -3,19 +3,20 @@
 import Link from "next/link";
 import { createClient } from "utils/supabase/server";
 
-import { editPlaytester } from "./actions";
-import AddKeyForm from "./add-key-form";
-import { ChevronLeft, ChevronRight, Save } from "lucide-react";
+import KeyAddForm from "./key-add-form";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import ChangeAvatarForm from "./avatar-form";
 
 import PlaytesterInfo from "../playtester-info";
 import PlaytesterDiscordForm from "./discord-form";
 
-import "./styles.css";
-import PlaytesterAddFeedbackForm from "./add-feedback-form";
+import FeedbackAddForm from "./feedback-add-form";
 import { PlaytesterFeedbackItem } from "components/playtester/playtester-feedback-item";
 import { Tables } from "types/supabase";
 import KeyEditForm from "./key-edit-form";
+import PlaytesterNoteForm from "components/playtester/playtester-note-form";
+
+import "./styles.css";
 
 export default async function Page(props: {
   params: Promise<{ playtesterId: string }>;
@@ -26,7 +27,7 @@ export default async function Page(props: {
   const playtesterQuery = await supabase
     .from("playtester")
     .select(
-      `*, game_key(*, game:game(*)), social_profile(*), feedback(*, game(*))`
+      `*, game_key(*, game:game(*)), social_profile(*), feedback(*, game(*))`,
     )
     .eq("id", playtesterId)
     .single();
@@ -82,7 +83,7 @@ export default async function Page(props: {
   const games = gamesQuery.data;
   const playtester = playtesterQuery.data;
   const currentIndex = playtestersQuery.data.findIndex(
-    (item) => item.id === Number(playtesterId)
+    (item) => item.id === Number(playtesterId),
   );
 
   const nextId =
@@ -128,37 +129,21 @@ export default async function Page(props: {
                   playtester={playtester}
                 />
               );
-            }
+            },
           )
         : null}
 
-      <AddKeyForm
+      <KeyAddForm
         playtesterId={Number(playtesterId)}
         defaultKeys={gameKeysQuery.data}
       />
 
-      <form action={editPlaytester}>
-        <input
-          name="playtesterId"
-          type="text"
-          value={playtesterId || undefined}
-          readOnly
-          hidden
-        />
-        <label>
-          <span>Notes</span>
-          <textarea
-            name="notes"
-            defaultValue={playtester.notes || undefined}
-            rows={10}
-          />
-        </label>
-        <button className="c-button" type="submit">
-          <Save /> Save
-        </button>
-      </form>
+      <PlaytesterNoteForm
+        playtesterId={playtesterId}
+        notes={playtester.notes}
+      />
       <PlaytesterDiscordForm playtester={playtester} />
-      <PlaytesterAddFeedbackForm playtester={playtester} games={games} />
+      <FeedbackAddForm playtester={playtester} games={games} />
       <div className="stack">
         {playtester.feedback.map((item) => {
           return (
