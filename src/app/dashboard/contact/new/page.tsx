@@ -19,7 +19,7 @@ export default function Page() {
         <label htmlFor="name">Name:</label>
         <input id="name" name="name" type="name" required />
         <label htmlFor="email">Email:</label>
-        <input id="email" name="email" type="email" required />
+        <input id="email" name="email" type="email" />
         <label htmlFor="tags">Tags:</label>
         <input id="tags" name="tags" type="text" />
 

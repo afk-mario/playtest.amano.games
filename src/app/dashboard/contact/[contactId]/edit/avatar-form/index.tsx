@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useActionState } from "react";
 import { useDropzone } from "react-dropzone";
 import * as Avatar from "@radix-ui/react-avatar";
 
@@ -20,9 +20,10 @@ export default function ChangeAvatarForm({
     ref.current?.requestSubmit();
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const [, action, pending] = useActionState(changeAvatar, false);
 
   return (
-    <form action={changeAvatar} className="c-avatar-change-form" ref={ref}>
+    <form action={action} className="c-avatar-change-form" ref={ref}>
       <div {...getRootProps()}>
         <input {...getInputProps()} name="avatar" />
         <Avatar.Root className="c-avatar" data-is-drag-active={isDragActive}>
