@@ -48,7 +48,7 @@ export default async function InfoPanel() {
   }
 
   return (
-    <details>
+    <details className="c-info-panel">
       <summary>Show info</summary>
       <pre
         style={{

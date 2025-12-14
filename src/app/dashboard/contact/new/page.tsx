@@ -20,6 +20,8 @@ export default function Page() {
         <input id="name" name="name" type="name" required />
         <label htmlFor="email">Email:</label>
         <input id="email" name="email" type="email" required />
+        <label htmlFor="tags">Tags:</label>
+        <input id="tags" name="tags" type="text" />
 
         <footer>
           <button className="c-button" formAction={action} disabled={pending}>

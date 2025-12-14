@@ -40,6 +40,7 @@ textarea {
 }
 
 .c-button {
+  color: var(--color-bg);
   text-decoration: none;
   width: max-content;
   background: var(--color-hl);

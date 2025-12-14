@@ -22,14 +22,15 @@ export async function markAsSent(formData: FormData) {
 
 export async function contactNew(prevState, formData: FormData) {
   const supabase = await createClient();
-  const { name, email } = {
+  const { tags, name, email } = {
     name: formData.get("name")?.toString(),
     email: formData.get("email")?.toString(),
+    tags: formData.get("tags")?.toString(),
   };
 
   const res = await supabase
     .from("playtester")
-    .insert([{ name, email }])
+    .insert([{ name, email, tags }])
     .select();
 
   if (res.error) {
