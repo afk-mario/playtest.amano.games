@@ -11,13 +11,13 @@ import PlaytesterInfo from "../contact-info";
 import PlaytesterDiscordForm from "./discord-form";
 
 import FeedbackAddForm from "./feedback-add-form";
-import { PlaytesterFeedbackItem } from "components/playtester/playtester-feedback-item";
 import { Tables } from "types/supabase";
 import KeyEditForm from "./key-edit-form";
 import PlaytesterNoteForm from "components/playtester/playtester-note-form";
 
 import "./styles.css";
 import FeedbackItem from "containers/feedback/feedback-item";
+import ContactDeleteForm from "containers/contact/contactDelete";
 
 export default async function Page(props: {
   params: Promise<{ contactId: string }>;
@@ -28,7 +28,7 @@ export default async function Page(props: {
   const playtesterQuery = await supabase
     .from("playtester")
     .select(
-      `*, game_key(*, game:game(*)), social_profile(*), feedback(*, game(*))`,
+      `*, game_key(*, game:game(*)), social_profile(*), feedback(*, game(*))`
     )
     .eq("id", contactId)
     .single();
@@ -84,7 +84,7 @@ export default async function Page(props: {
   const games = gamesQuery.data;
   const playtester = playtesterQuery.data;
   const currentIndex = playtestersQuery.data.findIndex(
-    (item) => item.id === Number(contactId),
+    (item) => item.id === Number(contactId)
   );
 
   const nextId =
@@ -130,7 +130,7 @@ export default async function Page(props: {
                   playtester={playtester}
                 />
               );
-            },
+            }
           )
         : null}
 
@@ -154,6 +154,7 @@ export default async function Page(props: {
           );
         })}
       </div>
+      <ContactDeleteForm contactId={contactId} />
       <details>
         <summary>Show data</summary>
         <pre
