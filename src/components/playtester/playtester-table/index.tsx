@@ -56,7 +56,7 @@ const columns = [
     header: "email",
     cell: (info) => {
       return (
-        <Link href={`/dashboard/playtester/${info.row.getValue("id")}/edit/`}>
+        <Link href={`/dashboard/contact/${info.row.getValue("id")}/edit/`}>
           {info.getValue()}
         </Link>
       );
@@ -228,7 +228,7 @@ export default function PlaytesterTable({
                     ? null
                     : flexRender(
                         header.column.columnDef.header,
-                        header.getContext(),
+                        header.getContext()
                       )}
                 </th>
               ))}
@@ -255,7 +255,7 @@ export default function PlaytesterTable({
                     ? null
                     : flexRender(
                         header.column.columnDef.footer,
-                        header.getContext(),
+                        header.getContext()
                       )}
                 </th>
               ))}

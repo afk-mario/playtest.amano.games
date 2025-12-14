@@ -30,6 +30,13 @@ export default function FeedbackForm({
     <form action={action}>
       <h3>{title}</h3>
       <input
+        name="feedbackId"
+        type="text"
+        value={feedback?.id || undefined}
+        readOnly
+        hidden
+      />
+      <input
         name="playtesterId"
         type="text"
         value={playtester?.id || undefined}
@@ -57,6 +64,14 @@ export default function FeedbackForm({
           />
         </label>
       </div>
+      <label>
+        <span>Url</span>
+        <input
+          name="feedbackUrl"
+          type="url"
+          defaultValue={feedback?.url || undefined}
+        />
+      </label>
       <label>
         <span>Feedback</span>
         <textarea

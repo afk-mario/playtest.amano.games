@@ -111,7 +111,7 @@ export async function updateKeyState(prevState, formData: FormData) {
           display_name: owner.username,
           social_id: owner.id.toString(),
         },
-        { onConflict: "playtester,platform", ignoreDuplicates: false },
+        { onConflict: "playtester,platform", ignoreDuplicates: false }
       );
     }
   }
@@ -161,7 +161,7 @@ export async function saveDiscord(prevState, formData: FormData) {
       playtester: playtesterId,
       social_id: discordSocialId,
     },
-    { onConflict: "playtester,platform", ignoreDuplicates: false },
+    { onConflict: "playtester,platform", ignoreDuplicates: false }
   );
   revalidatePath("/dashboard/contact/[contactId]", "page");
   revalidatePath("/dashboard/", "page");
@@ -211,28 +211,5 @@ export async function scrapeDiscordAvatar(prevState, formData: FormData) {
       avatar: data.publicUrl,
     })
     .eq("id", playtesterId);
-  revalidatePath("/dashboard/contact/[contactId]", "page");
-}
-
-export async function addFeedback(prevState, formData: FormData) {
-  const supabase = await createClient();
-  const { gameId, playtesterId, feedbackPlatform, feedbackText } = {
-    playtesterId: Number(formData.get("playtesterId")),
-    feedbackPlatform: formData.get("feedbackPlatform") as string,
-    feedbackText: formData.get("feedbackText") as string,
-    gameId: Number(formData.get("gameId")),
-  };
-  const res = await supabase
-    .from("feedback")
-    .insert({
-      playtester: playtesterId,
-      platform: feedbackPlatform,
-      text: feedbackText,
-      game: gameId,
-    })
-    .eq("id", playtesterId);
-  if (res.error) {
-    console.error(res.error);
-  }
   revalidatePath("/dashboard/contact/[contactId]", "page");
 }

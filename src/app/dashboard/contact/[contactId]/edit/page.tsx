@@ -81,6 +81,21 @@ export default async function Page(props: {
     );
   }
 
+  const feedbackQuery = await supabase
+    .from("feedback")
+    .select(`*, game(*)`)
+    .eq("playtester", contactId)
+    .order("timestamp", { ascending: false });
+
+  if (feedbackQuery.error) {
+    return (
+      <div>
+        <h2>Error Keys</h2>
+        <pre>{JSON.stringify(feedbackQuery.error, null, 2)}</pre>
+      </div>
+    );
+  }
+
   const games = gamesQuery.data;
   const playtester = playtesterQuery.data;
   const currentIndex = playtestersQuery.data.findIndex(
@@ -143,7 +158,7 @@ export default async function Page(props: {
       <PlaytesterDiscordForm playtester={playtester} />
       <FeedbackAddForm playtester={playtester} games={games} />
       <div className="stack">
-        {playtester.feedback.map((item) => {
+        {feedbackQuery.data.map((item) => {
           return (
             <FeedbackItem
               key={item.id}

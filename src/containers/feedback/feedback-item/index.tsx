@@ -26,11 +26,19 @@ export default function FeedbackItem({
       </div>
       <div className="c-feedback-item-content">
         <header className="cluster">
-          <Link href={`/dashboard/contact/${playtester.id}/edit/`}>
-            <h3>
-              {playtester.name} @ {feedback.platform}
-            </h3>
-          </Link>
+          <h3>
+            <Link href={`/dashboard/contact/${playtester.id}/edit/`}>
+              {playtester.name}
+            </Link>{" "}
+            @{" "}
+            {feedback.url ? (
+              <a target="_blank" rel="noopener noreferrer" href={feedback.url}>
+                {feedback.platform}
+              </a>
+            ) : (
+              feedback.platform
+            )}
+          </h3>
           <Link href={`/dashboard/feedback/${feedback.id}/edit/`}>
             <Time formatStr="PP hh:mm:ss">{feedback.timestamp}</Time>
           </Link>

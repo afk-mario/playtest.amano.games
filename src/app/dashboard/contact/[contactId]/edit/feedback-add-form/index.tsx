@@ -1,9 +1,9 @@
 "use client";
 
 import { Tables } from "types/supabase";
-import { addFeedback } from "../actions";
 import { useActionState } from "react";
 import FeedbackForm from "containers/feedback/feedback-form";
+import { feedbackAdd } from "app/dashboard/feedback/[feedbackId]/edit/actions";
 
 export default function FeedbackAddForm({
   playtester,
@@ -12,7 +12,7 @@ export default function FeedbackAddForm({
   games: Tables<"game">[];
   playtester: Tables<"playtester">;
 }) {
-  const [, action, pending] = useActionState(addFeedback, false);
+  const [, action, pending] = useActionState(feedbackAdd, false);
   return (
     <FeedbackForm
       title="Add Feedback"

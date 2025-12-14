@@ -5,12 +5,39 @@ import { RedirectType } from "next/navigation";
 import { createClient } from "utils/supabase/server";
 import { redirect } from "next/navigation";
 
+export async function feedbackAdd(prevState, formData: FormData) {
+  const supabase = await createClient();
+  const { gameId, playtesterId, feedbackPlatform, feedbackText, feedbackUrl } =
+    {
+      playtesterId: Number(formData.get("playtesterId")),
+      feedbackPlatform: formData.get("feedbackPlatform") as string,
+      feedbackText: formData.get("feedbackText") as string,
+      feedbackUrl: formData.get("feedbackUrl") as string,
+      gameId: Number(formData.get("gameId")),
+    };
+  const res = await supabase
+    .from("feedback")
+    .insert({
+      game: gameId,
+      playtester: playtesterId,
+      platform: feedbackPlatform,
+      text: feedbackText,
+      url: feedbackUrl,
+    })
+    .eq("id", playtesterId);
+  if (res.error) {
+    console.error(res.error);
+  }
+  revalidatePath("/dashboard/contact/[contactId]", "page");
+}
+
 export async function editFeedback(prevState, formData: FormData) {
   const supabase = await createClient();
-  const { gameId, feedbackPlatform, feedbackText, feedbackId } = {
+  const { gameId, feedbackUrl, feedbackPlatform, feedbackText, feedbackId } = {
     feedbackId: Number(formData.get("feedbackId")),
     feedbackPlatform: formData.get("feedbackPlatform") as string,
     feedbackText: formData.get("feedbackText") as string,
+    feedbackUrl: formData.get("feedbackUrl") as string,
     gameId: Number(formData.get("gameId")),
   };
   const res = await supabase
@@ -19,8 +46,11 @@ export async function editFeedback(prevState, formData: FormData) {
       platform: feedbackPlatform,
       text: feedbackText,
       game: gameId,
+      url: feedbackUrl,
     })
-    .eq("id", feedbackId);
+    .eq("id", feedbackId)
+    .select();
+
   if (res.error) {
     console.error(res.error);
   }

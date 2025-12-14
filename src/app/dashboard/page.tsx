@@ -16,7 +16,7 @@ export default async function Dashboard() {
   const { data: feedbacks } = await supabase
     .from("feedback")
     .select("*,game(*),playtester(*,social_profile(*))")
-    .order("id", { ascending: false });
+    .order("timestamp", { ascending: false });
 
   return (
     <div className="stack">
