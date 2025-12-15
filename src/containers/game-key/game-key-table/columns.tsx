@@ -20,6 +20,14 @@ export const columns = [
       </Link>
     ),
   }),
+  columnHelper.accessor("claimed", {
+    cell: (props) => {
+      if (props.getValue()) {
+        return <CircleCheck color="var(--color-hl)" />;
+      }
+      return <Circle color="var(--color-fg-alt)" />;
+    },
+  }),
   columnHelper.display({
     id: "playtester",
     header: "Contact",
@@ -35,9 +43,17 @@ export const columns = [
     header: "Game",
     cell: (props) => {
       const { game } = props.row.original;
-      console.log(game);
       if (game) {
         return <span>{game.name}</span>;
+      }
+    },
+  }),
+  columnHelper.accessor("key_sent", {
+    header: "Sent",
+    cell: (props) => {
+      const value = props.getValue() as string;
+      if (value) {
+        return <Time>{value}</Time>;
       }
     },
   }),
@@ -53,22 +69,6 @@ export const columns = [
         );
       } else {
         return null;
-      }
-    },
-  }),
-  columnHelper.accessor("claimed", {
-    cell: (props) => {
-      if (props.getValue()) {
-        return <CircleCheck color="var(--color-hl)" />;
-      }
-      return <Circle color="var(--color-fg-alt)" />;
-    },
-  }),
-  columnHelper.accessor("key_sent", {
-    cell: (props) => {
-      const value = props.getValue() as string;
-      if (value) {
-        return <Time>{value}</Time>;
       }
     },
   }),
