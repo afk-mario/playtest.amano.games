@@ -1,0 +1,7 @@
+.p-game-key-list > header {
+  width: 100%;
+  margin: auto;
+  max-width: var(--column-width-01);
+  align-items: center;
+  justify-content: space-between;
+}

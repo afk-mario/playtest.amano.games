@@ -13,10 +13,11 @@ export default function PlaytesterWidget({
   playtester,
 }: {
   playtester: {
-    social_profile: Tables<"social_profile">[];
+    social_profile?: Tables<"social_profile">[];
   } & Tables<"playtester">;
 }) {
   const gravatar = getGravatarUrl(playtester.email || undefined);
+  const playtesterSocialProfiles = playtester.social_profile;
   return (
     <div className="c-playterster-widget">
       <HoverCard.Root openDelay={300} closeDelay={10000}>
@@ -41,41 +42,43 @@ export default function PlaytesterWidget({
           >
             <HoverCard.Arrow className="c-playterster-widget-arrow" />
 
-            <div className="c-playterster-widget-info">
-              {playtester.social_profile.length > 0 ? (
-                <ul className="c-playterster-widget-social-list">
-                  {playtester.social_profile.map((item) => {
-                    const url = getSocialURL(item);
-                    return (
-                      <li
-                        className="c-playterster-widget-social-item"
-                        key={item.id}
-                      >
-                        <span className="c-playterster-widget-social-platform">
-                          {item.platform}
-                        </span>
-                        {url ? (
-                          <a
-                            href={url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {item.display_name}
-                          </a>
-                        ) : (
-                          <span>{item.display_name}</span>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
-              ) : null}
-              {playtester.notes ? (
-                <div className="c-playterster-widget-notes">
-                  <Markdown>{`**Notes:**\n${playtester.notes}`}</Markdown>
-                </div>
-              ) : null}
-            </div>
+            {playtesterSocialProfiles ? (
+              <div className="c-playterster-widget-info">
+                {playtesterSocialProfiles.length ? (
+                  <ul className="c-playterster-widget-social-list">
+                    {playtesterSocialProfiles.map((item) => {
+                      const url = getSocialURL(item);
+                      return (
+                        <li
+                          className="c-playterster-widget-social-item"
+                          key={item.id}
+                        >
+                          <span className="c-playterster-widget-social-platform">
+                            {item.platform}
+                          </span>
+                          {url ? (
+                            <a
+                              href={url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {item.display_name}
+                            </a>
+                          ) : (
+                            <span>{item.display_name}</span>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                ) : null}
+                {playtester.notes ? (
+                  <div className="c-playterster-widget-notes">
+                    <Markdown>{`**Notes:**\n${playtester.notes}`}</Markdown>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
 
             <div className="c-playterster-widget-description">
               <Markdown>{playtester.description}</Markdown>
