@@ -111,7 +111,7 @@ export async function updateKeyState(prevState, formData: FormData) {
           display_name: owner.username,
           social_id: owner.id.toString(),
         },
-        { onConflict: "playtester,platform", ignoreDuplicates: false }
+        { onConflict: "playtester,platform", ignoreDuplicates: false },
       );
     }
   }
@@ -161,7 +161,7 @@ export async function saveDiscord(prevState, formData: FormData) {
       playtester: playtesterId,
       social_id: discordSocialId,
     },
-    { onConflict: "playtester,platform", ignoreDuplicates: false }
+    { onConflict: "playtester,platform", ignoreDuplicates: false },
   );
   revalidatePath("/dashboard/contact/[contactId]", "page");
   revalidatePath("/dashboard/", "page");

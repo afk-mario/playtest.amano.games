@@ -60,7 +60,6 @@ export async function feedbackEdit(prevState, formData: FormData) {
     feedbackTimestamp: formData.get("feedbackTimestamp") as string,
     gameId: Number(formData.get("gameId")),
   };
-  console.log(feedbackTimestamp);
 
   const timestamp = feedbackTimestamp
     ? new Date(feedbackTimestamp).toISOString()

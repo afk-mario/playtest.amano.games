@@ -51,8 +51,6 @@ export async function contactDelete(prevState, formData: FormData) {
 
   const res = await supabase.from("playtester").delete().eq("id", contactId);
 
-  console.log("contactId", contactId);
-  console.log(res);
   if (res.error) {
     console.error(res.error);
   } else {

@@ -10,7 +10,6 @@ function getDateValue(timestamp?: string) {
   if (!timestamp) return undefined;
   const date = parseISO(timestamp);
   const res = format(date, "yyyy-MM-dd'T'HH:mm");
-  console.log(res);
   return res;
 }
 
