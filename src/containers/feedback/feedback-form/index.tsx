@@ -1,9 +1,18 @@
 "use client";
 
+import { parseISO, format } from "date-fns";
 import { Tables } from "types/supabase";
 import { SendHorizontal } from "lucide-react";
 import Listbox from "components/listbox";
 import Spinner from "components/spinner";
+
+function getDateValue(timestamp?: string) {
+  if (!timestamp) return undefined;
+  const date = parseISO(timestamp);
+  const res = format(date, "yyyy-MM-dd'T'HH:mm");
+  console.log(res);
+  return res;
+}
 
 export default function FeedbackForm({
   title,
@@ -64,14 +73,24 @@ export default function FeedbackForm({
           />
         </label>
       </div>
-      <label>
-        <span>Url</span>
-        <input
-          name="feedbackUrl"
-          type="url"
-          defaultValue={feedback?.url || undefined}
-        />
-      </label>
+      <div className="cluster">
+        <label>
+          <span>Url</span>
+          <input
+            name="feedbackUrl"
+            type="url"
+            defaultValue={feedback?.url || undefined}
+          />
+        </label>
+        <label htmlFor="">
+          <span>Date</span>
+          <input
+            type="datetime-local"
+            name="feedbackTimestamp"
+            defaultValue={getDateValue(feedback?.timestamp)}
+          />
+        </label>
+      </div>
       <label>
         <span>Feedback</span>
         <textarea

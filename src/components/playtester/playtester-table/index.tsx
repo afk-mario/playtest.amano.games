@@ -1,167 +1,17 @@
 "use client";
 
-import React, { useActionState } from "react";
-import Link from "next/link";
-import { Circle, CircleCheck } from "lucide-react";
+import React from "react";
 import {
-  createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
-import { Tables } from "types/supabase";
-
-import PlaytesterWidget from "../playtester-widget";
-
-import { updateKeyState } from "app/dashboard/contact/[contactId]/edit/actions";
+import { PlaytesterWithGameKeys } from "./columns";
 
 import "./styles.css";
 import "./actions.css";
-import { PlaytesterSendEmailForm } from "../playtester-send-email-form";
-import { GameKeyUpdateForm } from "containers/game-key/game-key-update-form";
 
-type PlaytesterWithGameKeys = {
-  game_key: Tables<"game_key">[];
-  social_profile: Tables<"social_profile">[];
-  feedback: Tables<"feedback">[];
-} & Tables<"playtester">;
-
-const columnHelper = createColumnHelper<PlaytesterWithGameKeys>();
-const columns = [
-  columnHelper.accessor("id", {
-    header: "№",
-    cell: (info) => (
-      <Link href={`/dashboard/contact/${info.getValue()}/edit/`}>
-        {info.row.index + 1}
-      </Link>
-    ),
-  }),
-  columnHelper.display({
-    id: "playtester",
-    cell: (props) => {
-      return <PlaytesterWidget playtester={props.row.original} />;
-    },
-  }),
-  columnHelper.accessor("name", {
-    header: "Name",
-    cell: (info) => {
-      return (
-        <Link href={`/dashboard/contact/${info.row.getValue("id")}/edit/`}>
-          {info.getValue()}
-        </Link>
-      );
-    },
-  }),
-  columnHelper.accessor("email", {
-    header: "email",
-    cell: (info) => {
-      return (
-        <Link href={`/dashboard/contact/${info.row.getValue("id")}/edit/`}>
-          {info.getValue()}
-        </Link>
-      );
-    },
-  }),
-  columnHelper.accessor("tags", {
-    header: "Tags",
-    cell: (info) => {
-      return (
-        <Link
-          className="cell-tag"
-          href={`/dashboard/contact/${info.row.getValue("id")}/edit/`}
-        >
-          <ul className="c-tag-list">
-            {info
-              .getValue()
-              ?.split(",")
-              .map((tag, i) => (
-                <li key={i}>
-                  <span className="c-tag">{tag}</span>
-                </li>
-              ))}
-          </ul>
-        </Link>
-      );
-    },
-  }),
-  // columnHelper.accessor("signup_at", {
-  //   header: "Signup",
-  //   cell: (info) => {
-  //     return (
-  //       <Link href={`/dashboard/contact/${info.row.getValue("id")}/edit/`}>
-  //         <Time formatStr="PP hh:mm:ss">{info.getValue()}</Time>;
-  //       </Link>
-  //     );
-  //   },
-  // }),
-  // columnHelper.accessor("created_at", {
-  //   header: "Created",
-  //   cell: (info) => {
-  //     return (
-  //       <Link href={`/dashboard/contact/${info.row.getValue("id")}/edit/`}>
-  //         <Time formatStr="PP hh:mm:ss">{info.getValue()}</Time>
-  //       </Link>
-  //     );
-  //   },
-  // }),
-  columnHelper.accessor("game_key", {
-    header: "Key?",
-    cell: (info) => {
-      return (
-        <Link href={`/dashboard/contact/${info.row.getValue("id")}/edit/`}>
-          {info.getValue().length > 0 ? (
-            <CircleCheck color="var(--color-hl)" />
-          ) : (
-            <Circle />
-          )}
-        </Link>
-      );
-    },
-  }),
-  columnHelper.accessor("game_key", {
-    id: "key_sent",
-    header: "Sent?",
-    cell: (info) => {
-      const playtester = info.row.original;
-      const [gameKey] = info.getValue();
-      const hasKey = gameKey != null;
-      const keySent = gameKey?.key_sent != null;
-      if (keySent) {
-        return (
-          <Link href={`/dashboard/contact/${info.row.getValue("id")}/edit/`}>
-            <CircleCheck color="var(--color-hl)" />
-          </Link>
-        );
-      }
-      if (hasKey) {
-        return <PlaytesterSendEmailForm playtester={playtester} />;
-      }
-      return <Circle />;
-    },
-  }),
-  columnHelper.accessor((row) => row.game_key[0]?.claimed, {
-    header: "Claimed?",
-    cell: (info) => {
-      const gameKeys: Tables<"game_key">[] =
-        info.row.getValue("game_key") || [];
-      const [gameKey] = gameKeys;
-      const playtesterId = info.row.getValue("id") as string;
-      return (
-        <GameKeyUpdateForm gameKey={gameKey} playtesterId={playtesterId} />
-      );
-    },
-  }),
-  columnHelper.accessor((row) => row.feedback.length > 0, {
-    header: "Feedback?",
-    cell: (info) => {
-      if (info.getValue()) {
-        return <CircleCheck color="var(--color-hl)" />;
-      }
-      return <Circle />;
-    },
-  }),
-];
+import { columns } from "./columns";
 
 export default function PlaytesterTable({
   defaultData,
@@ -201,7 +51,7 @@ export default function PlaytesterTable({
                     ? null
                     : flexRender(
                         header.column.columnDef.header,
-                        header.getContext()
+                        header.getContext(),
                       )}
                 </th>
               ))}
@@ -228,7 +78,7 @@ export default function PlaytesterTable({
                     ? null
                     : flexRender(
                         header.column.columnDef.footer,
-                        header.getContext()
+                        header.getContext(),
                       )}
                 </th>
               ))}

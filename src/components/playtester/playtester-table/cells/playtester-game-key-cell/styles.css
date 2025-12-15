@@ -1,0 +1,18 @@
+.c-playtester-game-key-cell {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  gap: var(--spacing-01);
+}
+
+.c-playtester-game-key-item {
+  gap: var(--spacing-01);
+}
+
+.c-playtester-game-key-item svg {
+  width: var(--size-base);
+}
+
+a.c-playtester-game-key-item:hover {
+  text-decoration: none;
+}

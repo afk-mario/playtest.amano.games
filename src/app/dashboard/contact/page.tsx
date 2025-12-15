@@ -18,7 +18,7 @@ export default async function Dashboard() {
 
   const { data: playtesters } = await supabase
     .from("playtester")
-    .select("*,game_key(*),social_profile(*),feedback(*)")
+    .select("*,game_key(*, game(*)),social_profile(*),feedback(*)")
     .order("id");
 
   return (

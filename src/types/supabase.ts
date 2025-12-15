@@ -91,6 +91,7 @@ export type Database = {
       }
       game_key: {
         Row: {
+          archive: boolean
           claimed: boolean | null
           created_at: string
           game: number | null
@@ -100,6 +101,7 @@ export type Database = {
           url: string | null
         }
         Insert: {
+          archive?: boolean
           claimed?: boolean | null
           created_at?: string
           game?: number | null
@@ -109,6 +111,7 @@ export type Database = {
           url?: string | null
         }
         Update: {
+          archive?: boolean
           claimed?: boolean | null
           created_at?: string
           game?: number | null

@@ -57,6 +57,13 @@ textarea {
   gap: var(--spacing-q);
 }
 
+.c-button[data-hierarchy="secondary"] {
+  color: var(--color-fg);
+  background: transparent;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
 .c-button svg {
   flex: 1 0 auto;
 }
@@ -64,6 +71,7 @@ textarea {
 .c-button:hover {
   color: var(--color-bg);
   background: var(--color-fg);
+  text-decoration: none;
 }
 
 .c-button:disabled {

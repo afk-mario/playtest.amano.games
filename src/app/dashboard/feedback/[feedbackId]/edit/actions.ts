@@ -7,14 +7,25 @@ import { redirect } from "next/navigation";
 
 export async function feedbackAdd(prevState, formData: FormData) {
   const supabase = await createClient();
-  const { gameId, playtesterId, feedbackPlatform, feedbackText, feedbackUrl } =
-    {
-      playtesterId: Number(formData.get("playtesterId")),
-      feedbackPlatform: formData.get("feedbackPlatform") as string,
-      feedbackText: formData.get("feedbackText") as string,
-      feedbackUrl: formData.get("feedbackUrl") as string,
-      gameId: Number(formData.get("gameId")),
-    };
+  const {
+    gameId,
+    playtesterId,
+    feedbackPlatform,
+    feedbackText,
+    feedbackUrl,
+    feedbackTimestamp,
+  } = {
+    playtesterId: Number(formData.get("playtesterId")),
+    feedbackPlatform: formData.get("feedbackPlatform") as string,
+    feedbackText: formData.get("feedbackText") as string,
+    feedbackUrl: formData.get("feedbackUrl") as string,
+    feedbackTimestamp: formData.get("feedbackTimestamp") as string,
+    gameId: Number(formData.get("gameId")),
+  };
+
+  const timestamp = feedbackTimestamp
+    ? new Date(feedbackTimestamp).toISOString()
+    : undefined;
   const res = await supabase
     .from("feedback")
     .insert({
@@ -23,6 +34,7 @@ export async function feedbackAdd(prevState, formData: FormData) {
       platform: feedbackPlatform,
       text: feedbackText,
       url: feedbackUrl,
+      timestamp,
     })
     .eq("id", playtesterId);
   if (res.error) {
@@ -31,15 +43,28 @@ export async function feedbackAdd(prevState, formData: FormData) {
   revalidatePath("/dashboard/contact/[contactId]", "page");
 }
 
-export async function editFeedback(prevState, formData: FormData) {
+export async function feedbackEdit(prevState, formData: FormData) {
   const supabase = await createClient();
-  const { gameId, feedbackUrl, feedbackPlatform, feedbackText, feedbackId } = {
+  const {
+    gameId,
+    feedbackId,
+    feedbackUrl,
+    feedbackText,
+    feedbackPlatform,
+    feedbackTimestamp,
+  } = {
     feedbackId: Number(formData.get("feedbackId")),
     feedbackPlatform: formData.get("feedbackPlatform") as string,
     feedbackText: formData.get("feedbackText") as string,
     feedbackUrl: formData.get("feedbackUrl") as string,
+    feedbackTimestamp: formData.get("feedbackTimestamp") as string,
     gameId: Number(formData.get("gameId")),
   };
+  console.log(feedbackTimestamp);
+
+  const timestamp = feedbackTimestamp
+    ? new Date(feedbackTimestamp).toISOString()
+    : undefined;
   const res = await supabase
     .from("feedback")
     .update({
@@ -47,6 +72,7 @@ export async function editFeedback(prevState, formData: FormData) {
       text: feedbackText,
       game: gameId,
       url: feedbackUrl,
+      timestamp,
     })
     .eq("id", feedbackId)
     .select();
@@ -58,7 +84,7 @@ export async function editFeedback(prevState, formData: FormData) {
   revalidatePath("/dashboard/feedback/[feedbackId]", "page");
 }
 
-export async function deleteFeedback(prevState, formData: FormData) {
+export async function feedbackDelete(prevState, formData: FormData) {
   const supabase = await createClient();
   const { feedbackId } = {
     feedbackId: Number(formData.get("feedbackId")),
