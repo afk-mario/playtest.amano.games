@@ -28,7 +28,7 @@ export default async function Page(props: {
   const playtesterQuery = await supabase
     .from("playtester")
     .select(
-      `*, game_key(*, game:game(*)), social_profile(*), feedback(*, game(*))`
+      `*, game_key(*, game:game(*)), social_profile(*), feedback(*, game(*))`,
     )
     .eq("id", contactId)
     .single();
@@ -70,7 +70,8 @@ export default async function Page(props: {
   const gameKeysQuery = await supabase
     .from("game_key")
     .select(`*`)
-    .is("playtester", null);
+    .is("playtester", null)
+    .eq("archive", false);
 
   if (gameKeysQuery.error) {
     return (
@@ -99,20 +100,20 @@ export default async function Page(props: {
   const games = gamesQuery.data;
   const playtester = playtesterQuery.data;
   const discordProfile = playtester.social_profile.find(
-    (item: Tables<"social_profile">) => item.platform === "discord"
+    (item: Tables<"social_profile">) => item.platform === "discord",
   );
   const twitterProfile = playtester.social_profile.find(
-    (item: Tables<"social_profile">) => item.platform === "twitter"
+    (item: Tables<"social_profile">) => item.platform === "twitter",
   );
   const blueskyProfile = playtester.social_profile.find(
-    (item: Tables<"social_profile">) => item.platform === "bluesky"
+    (item: Tables<"social_profile">) => item.platform === "bluesky",
   );
   const mastodonProfile = playtester.social_profile.find(
-    (item: Tables<"social_profile">) => item.platform === "mastodon"
+    (item: Tables<"social_profile">) => item.platform === "mastodon",
   );
 
   const currentIndex = playtestersQuery.data.findIndex(
-    (item) => item.id === Number(contactId)
+    (item) => item.id === Number(contactId),
   );
 
   const nextId =
@@ -158,7 +159,7 @@ export default async function Page(props: {
                   playtester={playtester}
                 />
               );
-            }
+            },
           )
         : null}
 
