@@ -10,12 +10,11 @@ import Spinner from "components/spinner";
 
 export function PlaytesterSendEmailForm({
   playtester,
+  gameKey,
 }: {
-  playtester: Tables<"playtester"> & {
-    game_key: Tables<"game_key">[];
-  };
+  playtester: Tables<"playtester">;
+  gameKey: Tables<"game_key">;
 }) {
-  const [gameKey] = playtester.game_key;
   const [, action, pending] = useActionState(sendGameKeyEmail, false);
   return (
     <form className="c-playtester-send-mail-form" action={action}>

@@ -8,6 +8,7 @@ import { removeKey, sendGameKeyEmail, updateKeyState } from "../actions";
 import "./styles.css";
 import { useActionState } from "react";
 import Spinner from "components/spinner";
+import { getKeyStatus } from "app/dashboard/game-key/utils";
 
 export default function KeyEditForm({
   gameKey,
@@ -71,7 +72,7 @@ export default function KeyEditForm({
         hidden
       />
       <label>
-        <span>Itch.io [{gameKey.claimed ? "Claimed" : "Pending"}]</span>
+        <span>Itch.io [{getKeyStatus(gameKey)}]</span>
         <span>game: {gameKey.game.name}</span>
         {gameKey.key_sent != null ? (
           <span>

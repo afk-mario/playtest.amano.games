@@ -121,7 +121,6 @@ export async function updateKeyState(prevState, formData: FormData) {
 }
 
 export async function sendGameKeyEmail(prevState, formData: FormData) {
-  console.log("Sending email");
   const supabase = await createClient();
   const { keyUrl, playtesterName, playtesterEmail } = {
     keyUrl: formData.get("keyUrl") as string,
@@ -129,20 +128,27 @@ export async function sendGameKeyEmail(prevState, formData: FormData) {
     playtesterEmail: formData.get("playtesterEmail") as string,
   };
 
+  console.log(`Sending key to ${playtesterName}:${playtesterEmail}=${keyUrl}`);
+
   try {
     const email = playtesterEmail;
-    await sendEmail(playtesterName, email, keyUrl);
-    const timestamp = new Date()
-      .toISOString()
-      .replace("T", " ")
-      .replace("Z", "+00");
-    console.log("email sent succesfully");
-    await supabase
-      .from("game_key")
-      .update({ key_sent: timestamp })
-      .eq("url", keyUrl);
-    revalidatePath("/dashboard/", "page");
-    console.log("user updated");
+    const { data, error } = await sendEmail(playtesterName, email, keyUrl);
+    if (error) {
+      throw new Error(`${error.message} ${error.statusCode}`);
+    }
+    if (!error) {
+      const timestamp = new Date()
+        .toISOString()
+        .replace("T", " ")
+        .replace("Z", "+00");
+      console.log("email sent succesfully", { data });
+      await supabase
+        .from("game_key")
+        .update({ key_sent: timestamp })
+        .eq("url", keyUrl);
+      revalidatePath("/dashboard/", "page");
+      console.log("user updated");
+    }
   } catch (e) {
     console.error("Error sending email", e);
   }
