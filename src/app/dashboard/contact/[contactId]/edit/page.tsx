@@ -69,7 +69,7 @@ export default async function Page(props: {
 
   const gameKeysQuery = await supabase
     .from("game_key")
-    .select(`*`)
+    .select(`*,game(*)`)
     .is("playtester", null)
     .eq("archive", false);
 

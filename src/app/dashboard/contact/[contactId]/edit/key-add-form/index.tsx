@@ -11,10 +11,14 @@ import { Tables } from "types/supabase";
 import "./styles.css";
 import Spinner from "components/spinner";
 
+interface GameKeyWithGame extends Omit<Tables<"game_key">, "game"> {
+  game: Tables<"game">;
+}
+
 function getGameKeyFilter(inputValue: string) {
   const lowerCasedInputValue = inputValue.toLowerCase();
 
-  return function keyFilter(key: Tables<"game_key">) {
+  return function keyFilter(key: GameKeyWithGame) {
     return !inputValue || key.url?.toLowerCase().includes(lowerCasedInputValue);
   };
 }
@@ -24,9 +28,9 @@ export default function KeyAddForm({
   defaultKeys = [],
 }: {
   playtesterId: number;
-  defaultKeys?: Tables<"game_key">[];
+  defaultKeys?: GameKeyWithGame[];
 }) {
-  const [items, setItems] = React.useState<Tables<"game_key">[]>(defaultKeys);
+  const [items, setItems] = React.useState<GameKeyWithGame[]>(defaultKeys);
   const {
     isOpen,
     getToggleButtonProps,
@@ -45,10 +49,10 @@ export default function KeyAddForm({
       }
     },
     items,
-    itemToKey(item: Tables<"game_key">) {
+    itemToKey(item: GameKeyWithGame) {
       return item?.id;
     },
-    itemToString(item: Tables<"game_key">) {
+    itemToString(item: GameKeyWithGame) {
       return item.url?.toString() || "";
     },
   });
@@ -114,7 +118,8 @@ export default function KeyAddForm({
                       key={item.id}
                       {...getItemProps({ item, index })}
                     >
-                      <span className="">{item.url?.slice(72)}</span>
+                      <span className="">{item.game?.name} - </span>
+                      <span className="">{item.id}</span>
                     </li>
                   ))}
                 </ul>
